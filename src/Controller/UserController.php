@@ -22,7 +22,8 @@ class UserController extends Controller
      * security.yaml on a login_path: login
      * @Route("/", name="login")
      */
-    public function login(){
+    public function login()
+    {
         return $this->render("user/login.html.twig.",
             []);
     }
@@ -32,7 +33,10 @@ class UserController extends Controller
      * Penser à parametre le fichier security.yaml pour rediriger la déconnexion.
      * @Route("/logout", name="logout")
      */
-    public function logout(){}
+    public function logout()
+    {
+
+    }
 
 
 
