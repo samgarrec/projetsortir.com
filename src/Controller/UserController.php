@@ -84,4 +84,29 @@ class UserController extends Controller
 
         return $this->render ("user/registersortie.html.twig", ["registerForm"=>$registerForm->createView()]);
     }
+
+
+
+    /**
+     *
+     * @Route("/profil", name="monProfil")
+     */
+    public function updateProfile (Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
+    {
+        $participant = $this->getUser();
+        $registerForm =$this->createForm(ParticipantType:: class, $participant);
+        $registerForm->handleRequest ($request);
+
+        if ($registerForm->isSubmitted() && $registerForm->isValid())
+        {
+            $hashed=$encoder->encodePassword ($participant, $participant->getPassword());
+            $participant->setPassword ($hashed);
+            $em->persist($participant);
+            $em->flush();
+            $this->addFlash("success", "Vos informations ont bien été enregistrées");
+            $this->redirectToRoute("sortireni.com");
+        }
+
+        return $this->render ("user/profil.html.twig", ["registerForm"=>$registerForm->createView()]);
+    }
 }
