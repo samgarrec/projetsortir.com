@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method Participant[]    findAll()
  * @method Participant[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ParticipantRepository extends ServiceEntityRepository implements UserLoaderInterface
+class ParticipantRepository extends ServiceEntityRepository implements  UserLoaderInterface
 {
     public function __construct(RegistryInterface $registry)
     {
@@ -52,7 +52,7 @@ class ParticipantRepository extends ServiceEntityRepository implements UserLoade
     public function loadUserByUsername($usernameOrEmail)
     {
         return $this->createQueryBuilder('p')
-            ->where('p.username= :query Or p.email = :query')
+            ->where('p.username = :query OR p.email = :query')
             ->setParameter('query', $usernameOrEmail)
             ->getQuery()
             ->getOneOrNullResult();
