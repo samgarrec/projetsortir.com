@@ -103,7 +103,7 @@ class UserController extends Controller
             $em->persist($participant);
             $em->flush();
             $this->addFlash("success", "Vos informations ont bien été enregistrées");
-            $this->redirectToRoute("sortireni.com");
+            $this->redirectToRoute("monProfil");
         }
 
         return $this->render ("user/profil.html.twig", ["registerForm"=>$registerForm->createView()]);

@@ -4,6 +4,11 @@
 {% block title %}Modifier mes informations || {{ parent () }} {% endblock%}
 
 {% block main %}
+    {% for message in app.flashes('success') %}
+        <div class="btn-success">
+            {{ message }}
+        </div>
+    {% endfor %}
     <h1>Modifier mes informations</h1>
 
     <div>
