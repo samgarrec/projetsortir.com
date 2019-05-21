@@ -1,1 +1,18 @@
 {% extends ('base.html.twig')%}
+
+{% block main %}
+    <h1>Login utilisateur</h1>
+    <form  method="post">
+        <label for="username">Username :</label>
+        <!--Symfony impose le nom _username pour gérer le mécanisme de login -->
+        <input type="text" name="_username" id="username">
+
+        <label for="password">Password :</label>
+        <!--Symfony impose le nom _password pour gérer le mécanisme de login -->
+        <input type="password" name="_password" id="password">
+
+        <button type="submit">Login !</button>
+
+    </form>
+
+{% endblock %}

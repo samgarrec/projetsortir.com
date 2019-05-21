@@ -13,14 +13,26 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends Controller
 {
     /**
-     * @Route("/user", name="user")
+     * @Route("/", name="login")
      */
-    public function index()
-    {
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
+    /**
+     * on nomme la route login car dans le fichier
+     * security.yaml on a login_path: login
+     * @Route("/", name="login")
+     */
+    public function login(){
+        return $this->render("user/login.html.twig.",
+            []);
     }
+
+    /**
+     * Symfony gére entierement cette route il suffit de l'appeler logout.
+     * Penser à parametre le fichier security.yaml pour rediriger la déconnexion.
+     * @Route("/logout", name="logout")
+     */
+    public function logout(){}
+
+
 
     /**
      * La fonction register() permet d'enregistrer un nouveau participant dans la BDD
