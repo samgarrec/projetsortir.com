@@ -71,6 +71,12 @@ class Sortie
      */
     private $Lieu;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="sorties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $organisateur;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -213,6 +219,18 @@ class Sortie
     public function setLieu(?Lieu $Lieu): self
     {
         $this->Lieu = $Lieu;
+
+        return $this;
+    }
+
+    public function getOrganisateur(): ?Participant
+    {
+        return $this->organisateur;
+    }
+
+    public function setOrganisateur(?Participant $organisateur): self
+    {
+        $this->organisateur = $organisateur;
 
         return $this;
     }
