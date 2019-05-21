@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
+use App\Entity\Sortie;
 use App\Form\ParticipantType;
+use App\Form\SortieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,5 +60,28 @@ class UserController extends Controller
         }
 
         return $this->render ("user/register.html.twig", ["registerForm"=>$registerForm->createView()]);
+    }
+
+
+    /**
+     *
+     * @Route("/registersortie")
+     */
+    public function registerSortie (Request $request, EntityManagerInterface $em)
+    {
+        $sortie = new Sortie();
+        $registerForm =$this->createForm(SortieType:: class, $sortie);
+        $registerForm->handleRequest ($request);
+
+        if ($registerForm->isSubmitted() && $registerForm->isValid())
+        {
+
+            $em->persist($sortie);
+            $em->flush();
+            $this->addFlash("success", "Vos informations ont bien été enregistrées");
+            $this->redirectToRoute("sortireni.com");
+        }
+
+        return $this->render ("user/registersortie.html.twig", ["registerForm"=>$registerForm->createView()]);
     }
 }
