@@ -31,7 +31,7 @@ class ParticipantType extends AbstractType
 
 
                 ])
-            ->add('Sortie')
+
         ;
     }
 

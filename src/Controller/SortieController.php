@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Sortie;
+use App\Form\SearchFormType;
 use App\Form\SortieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,17 +16,22 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class SortieController extends Controller
 {
     /**
-     * @Route("/sortie", name="sortie")
+     * @Route("/sorties", name="sortie")
      */
-    public function shearchSortie (Request $request, EntityManagerInterface $em)
+    public function searchSortie (Request $request, EntityManagerInterface $em)
     {
-        $sortie = new Sortie();
-        $registerForm =$this->createForm(SortieType:: class, $sortie);
+
+        $sorties = $this->getDoctrine()
+            ->getRepository(Sortie::class)
+            ->findAll();
 
 
 
 
-        return $this->render ("user/registersortie.html.twig", ["registerForm"=>$registerForm->createView()]);
+        $searchForm =$this->createForm(SearchFormType:: class);
+        $searchForm->handleRequest ($request);
+
+        return $this->render ("sortie/sortie.html.twig", ["formsearch"=>$sorties]);
     }
 
 

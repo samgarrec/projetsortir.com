@@ -41,7 +41,7 @@ class Sortie
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbInscriptionmax;
+    private $nbInscriptionMax;
 
     /**
      * @ORM\Column(type="text")
@@ -135,14 +135,14 @@ class Sortie
         return $this;
     }
 
-    public function getNbInscriptionmax(): ?int
+    public function getNbInscriptionMax(): ?int
     {
-        return $this->nbInscriptionmax;
+        return $this->nbInscriptionMax;
     }
 
-    public function setNbInscriptionmax(int $nbInscriptionmax): self
+    public function setNbInscriptionMax(int $nbInscriptionMax): self
     {
-        $this->nbInscriptionmax = $nbInscriptionmax;
+        $this->nbInscriptionMax = $nbInscriptionMax;
 
         return $this;
     }

@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ParticipantRepository")
- *  @UniqueEntity("username",message="le pseudo est deja existant")
+ *  @UniqueEntity("username",message="Ce pseudo existe déjà. Merci d'en choisir un autre")
  */
 class Participant implements  UserInterface
 {
