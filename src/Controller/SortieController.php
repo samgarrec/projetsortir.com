@@ -35,7 +35,7 @@ class SortieController extends Controller
             // traitement des champs du formulaire
             $sorties = $this->getDoctrine()
                 ->getRepository(Sortie::class) // appel du repository et de ses methodes
-                ->findBySearch($searchForm->getData());  // on passe les données du formulaire en parametre du tableau
+                ->findBySearch($searchForm->getData(),$this->getUser());  // on passe les données du formulaire en parametre du tableau
 
             dump($sorties);
             if ($sorties){

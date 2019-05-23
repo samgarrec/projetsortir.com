@@ -28,7 +28,7 @@
     {% for sortie in sorties %}
 {#        {% if sortie.etat.libelle !='cree' or sortie.etat.libelle!='annule' or sortie.organisateur.id==app.user.id %}#}
             <tr>
-            <th scope="row">1</th>
+                <td>{{ sortie.id }}</td>
             <td>{{ sortie.nom }}</td>
             <td>{{ sortie.lieu.ville.nom }}</td>
             <td>{{ sortie.dateheureDebut| date(('d/m/Y - H:i:s')) }}</td>
@@ -78,11 +78,11 @@
         </tr>
 
 
-        </tbody>
-        </table>
+
     {% endfor %}
 
-
+    </tbody>
+    </table>
 
 
 
