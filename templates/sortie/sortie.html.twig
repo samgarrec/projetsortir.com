@@ -1,11 +1,10 @@
-<<<<<<< HEAD
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello SortieController!{% endblock %}
 
 {% block body %}
-{{ form(searchForm) }}
-<h1>Bienvenue sur la page d'affichage des sorties</h1>
+    {{ form(searchForm) }}
+    <h1>Bienvenue sur la page d'affichage des sorties</h1>
     <table class="table">
     <thead>
     <tr>
@@ -27,59 +26,59 @@
     </thead>
     <tbody>
     {% for sortie in sorties %}
-        {% if sortie.etat.libelle !='cree' or sortie.etat.libelle!='annule' or sortie.organisateur.id==app.user.id %}
+{#        {% if sortie.etat.libelle !='cree' or sortie.etat.libelle!='annule' or sortie.organisateur.id==app.user.id %}#}
             <tr>
-                <th scope="row">1</th>
-                <td>{{ sortie.nom }}</td>
-                <td>{{ sortie.lieu.ville.nom }}</td>
-                <td>{{ sortie.dateheureDebut| date(('d/m/Y - H:i:s')) }}</td>
-                <td>{{ sortie.dateLimite| date(('d/m/Y'))}}</td>
-                <td>{{ sortie.participants.count()}}</td>
-                <td> {{ sortie.etat.libelle}}</td>
-                {% set present=false %}
-                <td>{% for participant in sortie.participants %}
-                 {% if app.user.username == participant.username %}
-                {% set present=true %} {% endif %}
-                 {% endfor %}
-                    {% if present %} ok{% else %} ko {% endif %}
-                </td>
-                <td>{{ sortie.organisateur.prenom}}</td>
+            <th scope="row">1</th>
+            <td>{{ sortie.nom }}</td>
+            <td>{{ sortie.lieu.ville.nom }}</td>
+            <td>{{ sortie.dateheureDebut| date(('d/m/Y - H:i:s')) }}</td>
+            <td>{{ sortie.dateLimite| date(('d/m/Y'))}}</td>
+            <td>{{ sortie.participants.count()}}</td>
+            <td> {{ sortie.etat.libelle}}</td>
+            {% set present=false %}
+            <td>{% for participant in sortie.participants %}
+                    {% if app.user.username == participant.username %}
+                        {% set present=true %} {% endif %}
+                {% endfor %}
+                {% if present %} ok{% else %} ko {% endif %}
+            </td>
+            <td>{{ sortie.organisateur.prenom}}</td>
 
 
-                <td>
-                    {% if sortie.etat.libelle  != 'cree'  %}
-                    <a href="#" class="btn-success" type="button">Afficher</a>{% endif %}
+            <td>
+            {% if sortie.etat.libelle  != 'cree'  %}
+                <a href="#" class="btn-success" type="button">Afficher</a>{% endif %}
 
-                    {% if present %}
-                    <a href="#" class="btn-success" type="button">se desister</a>{% endif %}
+            {% if present %}
+                <a href="#" class="btn-success" type="button">se desister</a>{% endif %}
 
-                    {% if present==false %}
-                    <a href="#"  class="btn-success" type="button">s'inscrire</a>{% endif %}
+            {% if present==false %}
+                <a href="#"  class="btn-success" type="button">s'inscrire</a>{% endif %}
 
-                    {% if sortie.organisateur.id == app.user.id %}
-                    <a href="#"  class="btn-success" type="button">modifier</a>
+            {% if sortie.organisateur.id == app.user.id %}
+                <a href="#"  class="btn-success" type="button">modifier</a>
 
-                    {% endif %}
-                    {% if sortie.etat.libelle == 'cree' and   sortie.organisateur.id==app.user.id %}
-                        <a href="#" class="btn-success"  type="button">publier</a>
-                    {% endif %}
-
-
-                    {% if sortie.organisateur.id == app.user.id %}
-                    <a href="#" class="btn-success" type="button">annuler</a>
-                    {% endif %}
-
-{% endif %}
-
-                </td>
+            {% endif %}
+            {% if sortie.etat.libelle == 'cree' and   sortie.organisateur.id==app.user.id %}
+                <a href="#" class="btn-success"  type="button">publier</a>
+            {% endif %}
 
 
+            {% if sortie.organisateur.id == app.user.id %}
+                <a href="#" class="btn-success" type="button">annuler</a>
+            {% endif %}
+
+{#        {% endif %}#}
+
+        </td>
 
 
-            </tr>
 
 
-            </tbody>
+        </tr>
+
+
+        </tbody>
         </table>
     {% endfor %}
 
@@ -89,95 +88,3 @@
 
 
 {% endblock %}
-=======
-{% extends 'base.html.twig' %}
-
-{% block title %}Hello SortieController!{% endblock %}
-
-{% block body %}
-
-<h1>Bienvenue sur la page d'affichage des sorties</h1>
-    <table class="table">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">nom</th>
-        <th scope="col">Ville</th>
-        <th scope="col">Date et heure</th>
-        <th scope="col">cloture</th>
-        <th scope="col">inscrits</th>
-        <th scope="col">etat</th>
-        <th scope="col">inscrit</th>
-        <th scope="col">organisateur</th>
-        <th scope="col">Action</th>
-
-
-
-
-    </tr>
-    </thead>
-    <tbody>
-    {% for sortie in sorties %}
-        {% if sortie.etat.libelle !='cree' or sortie.etat.libelle!='annule' or sortie.organisateur.id==app.user.id %}
-            <tr>
-                <th scope="row">1</th>
-                <td>{{ sortie.nom }}</td>
-                <td>{{ sortie.lieu.ville.nom }}</td>
-                <td>{{ sortie.dateheureDebut| date(('d/m/Y - H:i:s')) }}</td>
-                <td>{{ sortie.dateLimite| date(('d/m/Y'))}}</td>
-                <td>{{ sortie.participants.count()}}</td>
-                <td> {{ sortie.etat.libelle}}</td>
-                {% set present=false %}
-                <td>{% for participant in sortie.participants %}
-                 {% if app.user.username == participant.username %}
-                {% set present=true %} {% endif %}
-                 {% endfor %}
-                    {% if present %} ok{% else %} ko {% endif %}
-                </td>
-                <td>{{ sortie.organisateur.prenom}}</td>
-
-
-                <td>
-                    {% if sortie.etat.libelle  != 'cree'  %}
-                    <a href="#" class="btn-success" type="button">Afficher</a>{% endif %}
-
-                    {% if present %}
-                    <a href="#" class="btn-success" type="button">se desister</a>{% endif %}
-
-                    {% if present==false %}
-                    <a href="#"  class="btn-success" type="button">s'inscrire</a>{% endif %}
-
-                    {% if sortie.organisateur.id == app.user.id %}
-                    <a href="#"  class="btn-success" type="button">modifier</a>
-
-                    {% endif %}
-                    {% if sortie.etat.libelle == 'cree' and   sortie.organisateur.id==app.user.id %}
-                        <a href="#" class="btn-success"  type="button">publier</a>
-                    {% endif %}
-
-
-                    {% if sortie.organisateur.id == app.user.id %}
-                    <a href="#" class="btn-success" type="button">annuler</a>
-                    {% endif %}
-
-{% endif %}
-
-                </td>
-
-
-
-
-            </tr>
-
-
-            </tbody>
-        </table>
-    {% endfor %}
-
-
-
-
-
-
-{% endblock %}
->>>>>>> master

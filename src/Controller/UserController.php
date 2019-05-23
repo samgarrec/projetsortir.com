@@ -101,13 +101,13 @@ class UserController extends Controller
         {
             $em->persist($participant);
             $em->flush();
-<<<<<<< Updated upstream
+
             $this->addFlash("success", "Vos informations ont bien été enregistrées");
             $this->redirectToRoute("monProfil");
-=======
+
             $this->addFlash("success", "Vos modifications ont bien été prises en compte");
-            $this->redirectToRoute("sortireni.com");
->>>>>>> Stashed changes
+            $this->redirectToRoute("monProfil");
+
         }
 
         return $this->render ("user/profil.html.twig", ["registerForm"=>$registerForm->createView()]);
