@@ -28,8 +28,8 @@ class UserController extends Controller
     }
 
     /**
-     * Symfony gére entierement cette route il suffit de l'appeler logout.
-     * Penser à parametre le fichier security.yaml pour rediriger la déconnexion.
+     * Symfony gère entierement cette route il suffit de l'appeler logout.
+     * Penser à paramètrer le fichier security.yaml pour rediriger la déconnexion.
      * @Route("/logout", name="logout")
      */
     public function logout(){}
@@ -56,7 +56,7 @@ class UserController extends Controller
             $em->persist($participant);
             $em->flush();
             $this->addFlash("success", "Vos informations ont bien été enregistrées");
-            $this->redirectToRoute("sortireni.com");
+            $this->redirectToRoute("monProfil");
         }
 
         return $this->render ("user/register.html.twig", ["registerForm"=>$registerForm->createView()]);
@@ -82,7 +82,7 @@ class UserController extends Controller
             $this->redirectToRoute("sortireni.com");
         }
 
-        return $this->render ("user/registersortie.html.twig", ["registerForm"=>$registerForm->createView()]);
+        return $this->render ("registerSortie.html.twig", ["registerForm"=>$registerForm->createView()]);
     }
 
 
@@ -99,11 +99,15 @@ class UserController extends Controller
 
         if ($registerForm->isSubmitted() && $registerForm->isValid())
         {
-
             $em->persist($participant);
             $em->flush();
+<<<<<<< Updated upstream
             $this->addFlash("success", "Vos informations ont bien été enregistrées");
             $this->redirectToRoute("monProfil");
+=======
+            $this->addFlash("success", "Vos modifications ont bien été prises en compte");
+            $this->redirectToRoute("sortireni.com");
+>>>>>>> Stashed changes
         }
 
         return $this->render ("user/profil.html.twig", ["registerForm"=>$registerForm->createView()]);
