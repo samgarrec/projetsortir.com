@@ -19,32 +19,75 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
-    // /**
-    //  * @return Sortie[] Returns an array of Sortie objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findBySearch($searchForm)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->createQueryBuilder('s');
 
-    /*
-    public function findOneBySomeField($value): ?Sortie
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+        if (isset ($searchForm['Site'])) {
+            $siteSortie = $searchForm['Site'];
+
+            $qb->Where("s.site = :site");
+            $qb->setParameter("site", $siteSortie);
+        }
+        if (isset ($searchForm['nomDeLaSortie'])) {
+            $nomSortie = $searchForm['nomDeLaSortie'];
+            $qb->andWhere("s.nom  LIKE :nom");
+            $qb->setParameter("nom", '%' . $nomSortie . '%');
+        }
+        if (isset ($searchForm['dateDepart'])) {
+            $dateDepart = $searchForm['dateDepart'];
+            $qb->andWhere("s.dateheureDebut > :dateDepart");
+            $qb->setParameter('dateDepart',$dateDepart);
+        }
+        if (isset ($searchForm['dateFin'])) {
+            $dateFin = $searchForm['dateFin'];
+            $qb->andWhere("s.dateLimite < :dateFin");
+            $qb->setParameter('dateFin',$dateFin);
+        }
+
+
+
+
+            $query = $qb->getQuery();
+            $result = $query->getResult();
+            return $result;
+
+
+            //            ->andWhere('s.exampleField = :val')
+////            ->setParameter('val', $value)
+////            ->orderBy('s.id', 'ASC')
+////            ->setMaxResults(10)
+////            ->getQuery()
+////            ->getResult()
+////            ;
+        }
+        // /**
+        //  * @return Sortie[] Returns an array of Sortie objects
+        //  */
+        /*
+        public function findByExampleField($value)
+        {
+            return $this->createQueryBuilder('s')
+                ->andWhere('s.exampleField = :val')
+                ->setParameter('val', $value)
+                ->orderBy('s.id', 'ASC')
+                ->setMaxResults(10)
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+        */
+
+        /*
+        public function findOneBySomeField($value): ?Sortie
+        {
+            return $this->createQueryBuilder('s')
+                ->andWhere('s.exampleField = :val')
+                ->setParameter('val', $value)
+                ->getQuery()
+                ->getOneOrNullResult()
+            ;
+        }
+        */
+
 }

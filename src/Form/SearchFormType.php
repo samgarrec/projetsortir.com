@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
-use App\Entity\Category;
+ use Doctrine\ORM\EntityRepository;
+ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+ use Symfony\Component\Form\FormTypeInterface;
 use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Site;
@@ -21,18 +24,43 @@ class SearchFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('site',EntityType::class,[
-                'class' => Site::class,
-                'choice_label' => 'nom',
+            ->add('Site', EntityType::class,['class'=>Site::class,'query_builder'
+            => function(EntityRepository $er){
+                    return $er->createQueryBuilder('s')
+                        ->orderBy('s.nom','ASC');
+
+                },'choice_label'=>'nom',
+
+
             ])
-            ->add('nomdeLaSortie',TextType::class, [
+
+
+            ->add('nomDeLaSortie',\Symfony\Component\Form\Extension\Core\Type\TextType::class, [
             ])
             ->add('dateDepart',DateType::class, [
                 'widget' => 'choice',
             ])
             ->add('dateFin',DateType::class, [
                 'widget' => 'choice',
-            ]);
+            ])
+
+            ->add('isOrganisateur', CheckboxType::class, [
+                'label'    => 'Sorties dont je suis l \'orgarnisateur',
+                'required' => false,
+            ])
+            ->add('isRegistred', CheckboxType::class, [
+                'label'    => 'Sorties auquelles je suis inscrit',
+                'required' => false,
+            ])
+            ->add('isNotRegistred', CheckboxType::class, [
+                'label'    => 'Sorties auquelles je ne suis pas inscrit',
+                'required' => false,
+            ])
+            ->add('pastSorties', CheckboxType::class, [
+                'label'    => 'Sorties passées ',
+                'required' => false,
+            ])
+        ->add('rechercher',SubmitType::class);
 
 
 
