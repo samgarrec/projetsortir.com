@@ -53,6 +53,17 @@ class SortieRepository extends ServiceEntityRepository
             $qb->andWhere("s.organisateur = :organisateur");
             $qb->setParameter('organisateur',$user  );
         }
+        if ( isset($searchForm['isRegistred']) && $searchForm['isRegistred']==true) {
+            dump($searchForm);
+            $qb->join("s.participants","p",'WITH', 'p.id = :inscrit');
+            $qb->setParameter('inscrit',$user  );
+        }
+
+        if ( isset($searchForm['isNotRegistred']) && $searchForm['isNotRegistred']==true) {
+            dump($searchForm);
+          ->
+        }
+
         $query = $qb->getQuery();
         $result = $query->getResult();
         return $result;
