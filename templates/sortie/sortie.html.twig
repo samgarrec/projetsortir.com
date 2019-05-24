@@ -1,23 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SortieController!{% endblock %}
+{% block title %}Mes sorties | {{ parent () }} {% endblock %}
 
 {% block body %}
+    {{ parent () }}
     {{ form(searchForm) }}
     <h1>Bienvenue sur la page d'affichage des sorties</h1>
     <table class="table">
     <thead>
     <tr>
         <th scope="col">#</th>
-        <th scope="col">nom</th>
+        <th scope="col">Nom</th>
         <th scope="col">Ville</th>
         <th scope="col">Date et heure</th>
-        <th scope="col">cloture</th>
-        <th scope="col">inscrits</th>
-        <th scope="col">etat</th>
-        <th scope="col">inscrit</th>
-        <th scope="col">organisateur</th>
-        <th scope="col">Action</th>
+        <th scope="col">Clôture</th>
+        <th scope="col">Participants</th>
+        <th scope="col">Etat</th>
+        <th scope="col">Inscription</th>
+        <th scope="col">Organisateur</th>
+        <th scope="col">Actions</th>
 
 
 
@@ -33,14 +34,14 @@
             <td>{{ sortie.lieu.ville.nom }}</td>
             <td>{{ sortie.dateheureDebut| date(('d/m/Y - H:i:s')) }}</td>
             <td>{{ sortie.dateLimite| date(('d/m/Y'))}}</td>
-            <td>{{ sortie.participants.count()}}</td>
+            <td>{{ sortie.participants.count }}/{{ sortie.nbInscriptionMax }}</td>
             <td> {{ sortie.etat.libelle}}</td>
             {% set present=false %}
             <td>{% for participant in sortie.participants %}
                     {% if app.user.username == participant.username %}
                         {% set present=true %} {% endif %}
                 {% endfor %}
-                {% if present %} ok{% else %} ko {% endif %}
+                {% if present %} Inscrit(e) {% else %} Non inscrit(e) {% endif %}
             </td>
             <td>{{ sortie.organisateur.prenom}}</td>
 
@@ -50,29 +51,24 @@
                 <a href="#" class="btn-success" type="button">Afficher</a>{% endif %}
 
             {% if present %}
-                <a href="#" class="btn-success" type="button">se desister</a>{% endif %}
+                <a href="{{ path ('desistement', {'id': sortie.id}) }}" class="btn-success" type="button">Se désister</a>{% endif %}
 
             {% if present==false %}
-                <a href="#"  class="btn-success" type="button">s'inscrire</a>{% endif %}
+                <a href="{{ path ('inscription',{'id': sortie.id}) }}"  class="btn-success" type="button">S'inscrire</a>{% endif %}
 
             {% if sortie.organisateur.id == app.user.id %}
-                <a href="#"  class="btn-success" type="button">modifier</a>
+                <a href="#"  class="btn-success" type="button">Modifier</a>
 
             {% endif %}
             {% if sortie.etat.libelle == 'cree' and   sortie.organisateur.id==app.user.id %}
-                <a href="#" class="btn-success"  type="button">publier</a>
+                <a href="#" class="btn-success"  type="button">Publier</a>
             {% endif %}
 
 
             {% if sortie.organisateur.id == app.user.id %}
-                <a href="#" class="btn-success" type="button">annuler</a>
+                <a href="#" class="btn-success" type="button">Annuler</a>
             {% endif %}
-
-{#        {% endif %}#}
-
-        </td>
-
-
+            </td>
 
 
         </tr>

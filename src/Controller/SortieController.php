@@ -10,14 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SortieController extends Controller
 {
     /**
      * @Route("/sorties", name="sortie")
      */
-    public function searchSortie (Request $request, EntityManagerInterface $em)
+    public function searchSortie(Request $request, EntityManagerInterface $em)
     {
 
         $sorties = $this->getDoctrine()
@@ -25,37 +24,31 @@ class SortieController extends Controller
             ->findAll();
 
 
-
-
-        $searchForm =$this->createForm(SearchFormType:: class);
-        $searchForm->handleRequest ($request);
+        $searchForm = $this->createForm(SearchFormType:: class);
+        $searchForm->handleRequest($request);
 
         dump($searchForm->getData());
-        if($searchForm->isSubmitted() && $searchForm->isValid()){
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
             // traitement des champs du formulaire
             $sorties = $this->getDoctrine()
-                ->getRepository(Sortie::class) // appel du repository et de ses methodes
-                ->findBySearch($searchForm->getData(),$this->getUser());  // on passe les données du formulaire en parametre du tableau
+                // Appel du repository et de ses méthodes
+                ->getRepository(Sortie::class)
+                // On passe les données du formulaire en paramètre du tableau
+                ->findBySearch($searchForm->getData(), $this->getUser());
 
             dump($sorties);
-            if ($sorties){
-
-                return $this->render ("sortie/sortie.html.twig", [
-                    'searchForm'=>$searchForm->createView(),"sorties"=>$sorties]);}
-            else{
-
+            if ($sorties)
+            {
+                return $this->render("sortie/sortie.html.twig", [
+                    'searchForm' => $searchForm->createView(), "sorties" => $sorties]);
+            } else {
                 return new Response('aucun resultat');
             }
         }
 
-        return $this->render ("sortie/sortie.html.twig", ["sorties"=>$sorties,
-            'searchForm'=>$searchForm->createView()]);
+        return $this->render("sortie/sortie.html.twig", ["sorties" => $sorties,
+            'searchForm' => $searchForm->createView()]);
     }
-
-
-
-
-
 
 
     /**
@@ -100,4 +93,7 @@ class SortieController extends Controller
         }
 
         return $this->render("sortie/registerSortie.html.twig", ["addSortieForm" => $addSortieForm->createView()]);
-    }}
+    }
+
+
+}

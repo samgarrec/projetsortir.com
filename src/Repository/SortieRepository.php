@@ -8,6 +8,7 @@ use http\Client\Curl\User;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
+
 /**
  * @method Sortie|null find($id, $lockMode = null, $lockVersion = null)
  * @method Sortie|null findOneBy(array $criteria, array $orderBy = null)
@@ -20,6 +21,8 @@ class SortieRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Sortie::class);
     }
+
+
 
     public function findBySearch($searchForm,$user)
     {
@@ -41,21 +44,22 @@ class SortieRepository extends ServiceEntityRepository
         if (isset ($searchForm['dateDepart'])) {
             $dateDepart = $searchForm['dateDepart'];
             $qb->andWhere("s.dateheureDebut > :dateDepart");
-            $qb->setParameter('dateDepart',$dateDepart);
+            $qb->setParameter('dateDepart', $dateDepart);
         }
         if (isset ($searchForm['dateFin'])) {
             $dateFin = $searchForm['dateFin'];
             $qb->andWhere("s.dateLimite < :dateFin");
-            $qb->setParameter('dateFin',$dateFin);
+            $qb->setParameter('dateFin', $dateFin);
         }
-        if ( isset($searchForm['isOrganisateur']) && $searchForm['isOrganisateur']==true) {
+        if (isset($searchForm['isOrganisateur']) && $searchForm['isOrganisateur'] == true) {
 
             $qb->andWhere("s.organisateur = :organisateur");
-            $qb->setParameter('organisateur',$user  );
+            $qb->setParameter('organisateur', $user);
         }
         $query = $qb->getQuery();
         $result = $query->getResult();
         return $result;
+
 
 
         //            ->andWhere('s.exampleField = :val')
@@ -66,6 +70,12 @@ class SortieRepository extends ServiceEntityRepository
 ////            ->getResult()
 ////            ;
     }
+
+
+
+
+
+
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
     //  */

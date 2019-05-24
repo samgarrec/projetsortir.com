@@ -22,9 +22,9 @@ class UserController extends Controller
      * security.yaml on a login_path: login
      * @Route("/", name="login")
      */
-    public function login(){
-        return $this->render("user/login.html.twig.",
-            []);
+    public function login()
+    {
+        return $this->render("user/login.html.twig.", []);
     }
 
     /**
@@ -111,5 +111,41 @@ class UserController extends Controller
         }
 
         return $this->render ("user/profil.html.twig", ["registerForm"=>$registerForm->createView()]);
+    }
+
+    /**
+     * @return mixed
+     * @Route("/inscription/{id}", name="inscription")
+     */
+    public function inscription(Request $request, EntityManagerInterface $em, Sortie $s)
+    {
+        $user=$this->getUser();
+
+        // On récupère les données contenues dans le SortieRepository
+        $sortieRepository = $this->getDoctrine()->getRepository(Sortie::class);
+
+        $s->addParticipant($user);
+        $em->persist($s);
+        $em->flush();
+
+        return $this->redirectToRoute('sortie');
+    }
+
+    /**
+     * @return mixed
+     * @Route("/desistement/{id}", name="desistement")
+     */
+    public function desistement(Request $request, EntityManagerInterface $em, Sortie $s)
+    {
+        $user=$this->getUser();
+
+        // On récupère les données contenues dans le SortieRepository
+        $sortieRepository = $this->getDoctrine()->getRepository(Sortie::class);
+
+        $s->removeParticipant($user);
+        $em->persist($s);
+        $em->flush();
+
+        return $this->redirectToRoute('sortie');
     }
 }
