@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
+use App\Entity\Serie;
 use App\Entity\Sortie;
 use App\Form\ParticipantType;
 use App\Form\SortieType;
@@ -112,4 +113,23 @@ class UserController extends Controller
 
         return $this->render ("user/profil.html.twig", ["registerForm"=>$registerForm->createView()]);
     }
+    /**
+     *
+     * @Route("/profil/{id}", name="un-profil",requirements={"id":"\d+"})
+     */
+    public function showProfile (Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder,Participant $participant)
+    {
+
+
+        $participantRepo=$this->getDoctrine()->getRepository(Participant::class);
+        //Récupération de l'objet Serie.
+
+        dump($participant);
+
+
+
+
+        return $this->render ("user/unprofil.html.twig", ["unProfil"=>$participant]);
+    }
+
 }
