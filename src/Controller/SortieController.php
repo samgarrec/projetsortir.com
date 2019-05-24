@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Sortie;
+use App\Form\ParticipantType;
 use App\Form\SearchFormType;
 use App\Form\SortieType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SortieController extends Controller
 {
@@ -95,5 +97,30 @@ class SortieController extends Controller
         return $this->render("sortie/registerSortie.html.twig", ["addSortieForm" => $addSortieForm->createView()]);
     }
 
+    /**
+     *
+     * @Route("/updateSortie{id}", name="modifierSortie")
+     */
+    public function updateSortie (Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder,Sortie $sortie)
+    {
+
+        $addSortieForm =$this->createForm(SortieType:: class,$sortie);
+        $addSortieForm->handleRequest ($request);
+
+        if ($addSortieForm->isSubmitted() && $addSortieForm->isValid())
+        {
+            $em->persist($sortie);
+            $em->flush();
+
+            $this->addFlash("success", "Vos informations ont bien été enregistrées");
+            $this->redirectToRoute("monProfil");
+
+            $this->addFlash("success", "Vos modifications ont bien été prises en compte");
+            $this->redirectToRoute("monProfil");
+
+        }
+
+        return $this->render ("sortie/registerSortie.html.twig", ["addSortieForm"=>$addSortieForm->createView()]);
+    }
 
 }

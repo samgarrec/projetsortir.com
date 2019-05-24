@@ -52,17 +52,23 @@
             {% if sortie.etat.libelle  != 'cree'  %}
                 <a href="#" class="btn-success" type="button">Afficher</a>{% endif %}
 
-            {% if present %}
+            {% if present and sortie.dateLimite > date() %}
                 <a href="{{ path ('desistement', {'id': sortie.id}) }}" class="btn-success" type="button">Se désister</a>{% endif %}
+{#                {% if date(user.created_at) < date() %}#}
+{#                    #}{# always! #}
+{#                {% endif %}#}
+            {% if present==false and sortie.dateLimite > date() %}
 
-            {% if present==false %}
-                <a href="{{ path ('inscription',{'id': sortie.id}) }}"  class="btn-success" type="button">S'inscrire</a>{% endif %}
+                <a href="{{ path ('inscription',{'id': sortie.id}) }}"  class="btn-success" type="button">S'inscrire</a>
 
-            {% if sortie.organisateur.id == app.user.id %}
-                <a href="#"  class="btn-success" type="button">Modifier</a>
+
+                {% endif %}
+
+            {% if sortie.organisateur.id == app.user.id and sortie.dateLimite > date()%}
+                <a href="{{ path ('modifierSortie',{'id': sortie.id}) }}"  class="btn-success" type="button">Modifier</a>
 
             {% endif %}
-            {% if sortie.etat.libelle == 'cree' and   sortie.organisateur.id==app.user.id %}
+            {% if sortie.etat.libelle == 'cree' and   sortie.organisateur.id==app.user.id and sortie.dateLimite > date() %}
                 <a href="#" class="btn-success"  type="button">Publier</a>
             {% endif %}
 
