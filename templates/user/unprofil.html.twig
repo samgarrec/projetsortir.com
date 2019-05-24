@@ -1,0 +1,52 @@
+{% extends ('base.html.twig') %}
+
+{% block title %}afficher un profil|| {{ parent () }} {% endblock%}
+
+{% block main %}
+
+
+    <h1>voici le profil de {{ unProfil.username }}</h1><table class="table">
+    <thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">nom</th>
+        <th scope="col">prenom</th>
+        <th scope="col">telephone</th>
+        <th scope="col">email</th>
+        <th scope="col">admin</th>
+        <th scope="col">site</th>
+
+
+
+    </tr>
+    </thead>
+    <tbody>
+
+        {#        {% if sortie.etat.libelle !='cree' or sortie.etat.libelle!='annule' or sortie.organisateur.id==app.user.id %}#}
+        <tr>
+            <td>{{ unProfil.id }}</td>
+            <td>{{ unProfil.nom }}</td>
+            <td>{{ unProfil.prenom }}</td>
+            <td>{{ unProfil.telephone }}</td>
+            <td>{{ unProfil.email}}</td>
+            <td>{% if unProfil.administrateur  %} oui{% else %}non{% endif %}</td>
+            <td> {{ unProfil.site.nom}}</td>
+
+
+
+
+        </tr>
+
+
+
+
+
+    </tbody>
+</table>
+
+  <h2>hello</h2>
+
+
+
+
+{% endblock %}

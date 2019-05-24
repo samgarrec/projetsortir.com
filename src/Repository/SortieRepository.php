@@ -56,6 +56,45 @@ class SortieRepository extends ServiceEntityRepository
             $qb->andWhere("s.organisateur = :organisateur");
             $qb->setParameter('organisateur', $user);
         }
+        if ( isset($searchForm['isRegistred']) && $searchForm['isRegistred']==true) {
+            dump($searchForm);
+            $qb->join("s.participants","p",'WITH', 'p.id = :inscrit');
+            $qb->setParameter('inscrit',$user  );
+        }
+
+//        if ( isset($searchForm['isNotRegistred']) && $searchForm['isNotRegistred']==true) {
+//
+//
+//            $dql= $this->createQueryBuilder('s2');
+//            $dql->innerJoin('s2.participants','p2')
+//                ->where($qb->expr()->eq('p2.id',$user));
+//                $qb->orWhere($qb->expr()->notIn('s.id',$dql->getDQL()));
+//
+//        };
+
+
+//            SELECT * from sortie
+//join participant_sortie ps on ps.sortie_id=sortie.id
+//join participant p on p.id=ps.participant_id
+//where p.id
+//not in (select p.id
+//        from sortie
+//        join participant_sortie ps on ps.sortie_id= sortie.id
+//        join participant p on p.id=ps.participant_id where p.id=2)
+//          $dql= <<<DQL
+//                SELECT s
+//                 FROM App\Entity\Sortie s
+//                 JOIN s.participants p
+//                 WHERE p.id NOT IN (
+//                    SELECT s2
+//                    FROM  App\Entity\Sortie s2
+//                    JOIN s2.participants p
+//                    WHERE p.id = :user
+//                 )
+//          DQL;
+//
+
+
         $query = $qb->getQuery();
         $result = $query->getResult();
         return $result;
