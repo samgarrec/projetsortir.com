@@ -65,10 +65,10 @@ class SortieRepository extends ServiceEntityRepository
 //        if ( isset($searchForm['isNotRegistred']) && $searchForm['isNotRegistred']==true) {
 //
 //
-//            $dql= $this->createQueryBuilder('s2');
-//            $dql->innerJoin('s2.participants','p2')
-//                ->where($qb->expr()->eq('p2.id',$user));
-//                $qb->orWhere($qb->expr()->notIn('s.id',$dql->getDQL()));
+//            $dql= $this->createQueryBuilder('s2'); // choisi tout depuis sortie
+//            $dql->innerJoin('s2.participants','p2')  /filtre eng ardant/ajoute tous les particiapnts  liés à la sortie
+//                ->where($qb->expr()->eq('p2.id',$user)); //
+//                $qb->orWhere($qb->expr()->notIn('s.id',$dql->getDQL())); // ajout  de la sous condition not in choisi toute les sortie ou l user n est pas inscrit
 //
 //        };
 

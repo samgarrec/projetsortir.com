@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function login()
     {
-        return $this->render("user/login.html.twig.", []);
+        return $this->render("user/login.html.twig", []);
     }
 
     /**
