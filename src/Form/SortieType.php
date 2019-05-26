@@ -8,6 +8,7 @@ use App\Entity\Sortie;
 use App\Entity\Ville;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -23,8 +24,8 @@ class SortieType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class)
-            ->add('dateheureDebut', DateType::class, ['widget' => 'single_text', 'data' => new \DateTime("now")])
-            ->add('dateLimite', DateType::class, ['widget' => 'single_text', 'data' => new \DateTime("now")])
+            ->add('dateheureDebut', DateTimeType::class)
+            ->add('dateLimite', DateType::class, ['widget' => 'single_text'])
             ->add('nbInscriptionMax', IntegerType::class)
             ->add('duree', IntegerType::class, ['label' => 'Durée :'])
             ->add('infoSortie', TextareaType::class)

@@ -1,0 +1,14 @@
+{% extends ('base.html.twig') %}
+
+
+{% block main %}
+    {% for message in app.flashes('success') %}
+        <div class="btn btn-primary">
+        page de motif annulation    {{ message }}
+        </div>
+    {% endfor %}
+
+{{ form(cancelForm) }}
+
+
+{% endblock %}

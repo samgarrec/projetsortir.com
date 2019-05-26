@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ParticipantRepository")
@@ -37,6 +38,7 @@ class Participant implements  UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      */
     private $telephone;
 
@@ -254,7 +256,10 @@ class Participant implements  UserInterface
 
     public function getRoles()
     {
-        return ["ROLE_USER", "ROLE_ADMIN"];
+        if($this->getAdministrateur()){
+        return["ROLE_ADMIN"];}
+        else{
+        return ["ROLE_USER"];}
     }
 
     public function getSalt()

@@ -56,21 +56,31 @@ class SortieRepository extends ServiceEntityRepository
             $qb->andWhere("s.organisateur = :organisateur");
             $qb->setParameter('organisateur', $user);
         }
+        if (isset($searchForm['pastSorties']) && $searchForm['pastSorties'] == true) {
+
+            $qb->andWhere("s.dateLimite < :now");
+            $qb->setParameter('now', new \DateTime('now'));
+        }
+
+
+
+
+
         if ( isset($searchForm['isRegistred']) && $searchForm['isRegistred']==true) {
             dump($searchForm);
             $qb->join("s.participants","p",'WITH', 'p.id = :inscrit');
             $qb->setParameter('inscrit',$user  );
         }
 
-//        if ( isset($searchForm['isNotRegistred']) && $searchForm['isNotRegistred']==true) {
-//
-//
-//            $dql= $this->createQueryBuilder('s2'); // choisi tout depuis sortie
-//            $dql->innerJoin('s2.participants','p2')  /filtre eng ardant/ajoute tous les particiapnts  liés à la sortie
-//                ->where($qb->expr()->eq('p2.id',$user)); //
-//                $qb->orWhere($qb->expr()->notIn('s.id',$dql->getDQL())); // ajout  de la sous condition not in choisi toute les sortie ou l user n est pas inscrit
-//
-//        };
+     //  if ( isset($searchForm['isNotRegistred']) && $searchForm['isNotRegistred']==true) {
+
+
+     //      $dql= $this->createQueryBuilder('s2'); // choisi tout depuis sortie
+     //    $dql->innerJoin('s2.participants','p2')   //filtre eng ardant/ajoute tous les particiapnts  liés à la sortie
+      //          ->where($qb->expr()->eq('p2.id',$user->getId())); //
+        //       $qb->orWhere($qb->expr()->notIn('s.id',$dql->getDQL())); // ajout  de la sous condition not in choisi toute les sortie ou l user n est pas inscrit
+
+       // };
 
 
 //            SELECT * from sortie
@@ -111,7 +121,19 @@ class SortieRepository extends ServiceEntityRepository
     }
 
 
+    public function findAllUnderOneMonth()
+    {
+        $date = new \DateTime('now');
+        $date->modify('-1 month');
 
+
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.dateheureDebut > :val')
+            ->setParameter('val', $date)
+            ->getQuery()
+            ->getResult();
+
+    }
 
 
 

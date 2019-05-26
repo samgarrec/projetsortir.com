@@ -43,9 +43,9 @@
 
     </tbody>
 </table>
-
-  <h2>hello</h2>
-
+{% if app.user== unProfil %}
+    <a href="{{ path ('monProfil',{'id': unProfil.id })}}">modifier mon profil</a>
+{% endif %}
 
 
 

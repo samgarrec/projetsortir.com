@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Sortie;
+use App\Form\CancelType;
 use App\Form\ParticipantType;
 use App\Form\SearchFormType;
 use App\Form\SortieType;
@@ -23,8 +25,11 @@ class SortieController extends Controller
 
         $sorties = $this->getDoctrine()
             ->getRepository(Sortie::class)
-            ->findAll();
+            ->findAllUnderOneMonth();
+        foreach ($sorties as $sortie) {
 
+            dump($sortie->getLieu()->getRue());
+        }
 
         $searchForm = $this->createForm(SearchFormType:: class);
         $searchForm->handleRequest($request);
@@ -39,12 +44,18 @@ class SortieController extends Controller
                 ->findBySearch($searchForm->getData(), $this->getUser());
 
             dump($sorties);
-            if ($sorties)
-            {
+            if ($sorties) {
+                $this->addFlash(
+                    'notice',
+                    'Resultat de votre recherche');
                 return $this->render("sortie/sortie.html.twig", [
                     'searchForm' => $searchForm->createView(), "sorties" => $sorties]);
             } else {
-                return new Response('aucun resultat');
+                $this->addFlash(
+                    'notice',
+                    'pas de resultats ...'
+                );
+                $this->redirectToRoute("sortie");
             }
         }
 
@@ -58,7 +69,7 @@ class SortieController extends Controller
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/nouvelle_sortie", name="nouvelle sortie")
+     * @Route("/user/nouvelle_sortie", name="nouvelle_sortie")
      */
     public function addSortie(Request $request, EntityManagerInterface $em)
     {
@@ -73,7 +84,7 @@ class SortieController extends Controller
             $nextAction = $addSortieForm->get('enregistrer')->isClicked() ? 'enregistrer' : 'publier';
 
             if ($nextAction == 'enregistrer') {
-                $this->redirectToRoute("nouvelle sortie");
+                $this->redirectToRoute("nouvelle_sortie");
                 // Récupération des données de l'utilisateur
                 $user = $this->getUser();
                 // Récupération de l'id_site
@@ -91,7 +102,7 @@ class SortieController extends Controller
                 $this->addFlash("success", "Votre sortie a été créée");
 
             }
-            return $this->redirectToRoute("nouvelle sortie");
+            return $this->redirectToRoute("nouvelle_sortie");
         }
 
         return $this->render("sortie/registerSortie.html.twig", ["addSortieForm" => $addSortieForm->createView()]);
@@ -99,16 +110,15 @@ class SortieController extends Controller
 
     /**
      *
-     * @Route("/updateSortie{id}", name="modifierSortie")
+     * @Route("/updateSortie/{id}", name="modifierSortie")
      */
-    public function updateSortie (Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder,Sortie $sortie)
+    public function updateSortie(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder, Sortie $sortie)
     {
 
-        $addSortieForm =$this->createForm(SortieType:: class,$sortie);
-        $addSortieForm->handleRequest ($request);
+        $addSortieForm = $this->createForm(SortieType:: class, $sortie);
+        $addSortieForm->handleRequest($request);
 
-        if ($addSortieForm->isSubmitted() && $addSortieForm->isValid())
-        {
+        if ($addSortieForm->isSubmitted() && $addSortieForm->isValid()) {
             $em->persist($sortie);
             $em->flush();
 
@@ -120,7 +130,66 @@ class SortieController extends Controller
 
         }
 
-        return $this->render ("sortie/registerSortie.html.twig", ["addSortieForm"=>$addSortieForm->createView()]);
+        return $this->render("sortie/registerSortie.html.twig", ["addSortieForm" => $addSortieForm->createView(),
+                "edit" => "edit"]
+        );
     }
 
+    /**
+     *
+     * @Route("/cancelSortie/{id}", name="annulerSortie")
+     */
+    public function cancelSortie(Request $request, EntityManagerInterface $em, Sortie $sortie)
+    {
+
+        $etatRepository = $em->getRepository('App:Etat');
+        $etat = $etatRepository->find(3);
+        $cancelForm = $this->createForm(CancelType::class, $sortie);
+        $cancelForm->handleRequest($request);
+
+        if ($sortie->getOrganisateur() == $this->getUser()) {
+
+
+
+            if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
+    $sortie->setInfoSortie('motif de l\'annulation : '.$sortie->getInfoSortie());
+                $sortie->setEtat($etat);
+                $em->persist($sortie);
+                $em->flush();
+
+                $this->addFlash("notice", "Votre sortie a ete annule");
+                return $this->redirectToRoute('sortie');
+
+            }
+
+
+            return $this->render("sortie/cancelSortie.html.twig", ["cancelForm" => $cancelForm->createView()]
+            );
+        }
+        return $this->redirectToRoute('sortie');
+    }
+
+
+
+
+
+    /**
+     *
+     * @Route("/sortie/{id}", name="une-sortie",requirements={"id":"\d+"})
+     */
+    public function showSortie (Request $request, Sortie $sortie)
+    {
+
+
+
+
+        return $this->render ("sortie/uneSortie.html.twig", ["sortie"=>$sortie]);
+
+
+
+
+
+
+
+    }
 }
