@@ -3,16 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
-use App\Entity\Serie;
 use App\Entity\Sortie;
 use App\Form\ChangePasswordType;
 use App\Form\ParticipantType;
 use App\Form\SortieType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -105,17 +104,23 @@ class UserController extends Controller
 
 
     /**
-     *
      * @Route("/profil", name="monProfil")
      */
     public function updateProfile (Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
     {
+
         $participant = $this->getUser();
+
         $registerForm =$this->createForm(ParticipantType:: class, $participant);
         $registerForm->handleRequest ($request);
 
         if ($registerForm->isSubmitted() && $registerForm->isValid())
         {
+            $file = $participant->getPicture ();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
+            $file->move($this->getParameter ('pictures_directory'), $fileName);
+            $participant->setPicture($fileName);
             $em->persist($participant);
             $em->flush();
 
@@ -125,6 +130,8 @@ class UserController extends Controller
 
         return $this->render ("user/profil.html.twig", ["registerForm"=>$registerForm->createView()]);
     }
+
+
     /**
      *
      * @Route("/profil/{id}", name="un-profil",requirements={"id":"\d+"})

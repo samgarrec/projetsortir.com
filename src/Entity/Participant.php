@@ -80,6 +80,7 @@ class Participant implements  UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File(mimeTypes={"image/png", "image/jpeg", "image/svg+xml"})
      */
     private $picture;
 
@@ -279,12 +280,12 @@ class Participant implements  UserInterface
         // TODO: Implement eraseCredentials() method.
     }
 
-    public function getPicture(): ?string
+    public function getPicture()
     {
         return $this->picture;
     }
 
-    public function setPicture(?string $picture): self
+    public function setPicture($picture): self
     {
         $this->picture = $picture;
 
