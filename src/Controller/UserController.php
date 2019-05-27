@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controller;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use App\Entity\Participant;
 
 use App\Entity\Participant;
 use App\Entity\Sortie;
@@ -14,6 +16,8 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class UserController extends Controller
 {
@@ -213,7 +217,7 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordType::class, $user);
-
+        dump($form);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -221,18 +225,18 @@ class UserController extends Controller
 
             $oldPassword = $request->request->get('change_password')['oldPassword'];
 
+
             // Si l'ancien mot de passe est bon
             if ($pwdEncoder->isPasswordValid($user, $oldPassword)) {
-                dump($oldPassword);
-                $newEncodedPassword = $pwdEncoder->encodePassword($user, $user->getPlainPassword());
-                $user->setPassword($newEncodedPassword);
+
+                $user->setPassword($pwdEncoder->encodePassword($user,$form->get('password')->getData()));
 
                 $em->persist($user);
                 $em->flush();
 
                 $this->addFlash('notice', 'Votre mot de passe a bien été modifié !');
 
-                return $this->redirectToRoute('profile');
+                return $this->redirectToRoute('sortie');
             } else {
                 $form->addError(new FormError('Votre ancien mot de passe est incorrect'));
             }

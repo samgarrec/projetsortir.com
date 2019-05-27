@@ -80,7 +80,7 @@ class Participant implements  UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\File(mimeTypes={"image/png", "image/jpeg", "image/svg+xml"})
+     * @Assert\File(mimeTypes={ "image/png", "image/jpeg" })
      */
     private $picture;
 
@@ -285,7 +285,7 @@ class Participant implements  UserInterface
         return $this->picture;
     }
 
-    public function setPicture($picture): self
+    public function setPicture( $picture): self
     {
         $this->picture = $picture;
 

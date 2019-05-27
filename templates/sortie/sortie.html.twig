@@ -33,7 +33,10 @@
 
     {{ form_end(searchForm) }}
 
+<div class="row" style="height: 200px">
 
+
+</div>
     <h1>Bienvenue sur la page d'affichage des sorties</h1>
     <table class="table table-striped table-dark text-center">
     <thead>
@@ -77,10 +80,10 @@
 
             <td>
             {% if sortie.etat.libelle  != 'cree'  %}
-                <a href="{{ path('une-sortie',{'id': sortie.id}) }}" class="btn-success" type="button">Afficher</a>{% endif %}
+                <a href="{{ path('une-sortie',{'id': sortie.id}) }}" class="btn-primary" type="button">Afficher</a>{% endif %}
 
             {% if present and sortie.dateLimite > date() and sortie.etat.id!=3%}
-                <a href="{{ path ('desistement', {'id': sortie.id}) }}" class="btn-success" type="button">Se désister</a>{% endif %}
+                <a href="{{ path ('desistement', {'id': sortie.id}) }}" class="btn-dark" type="button">Se désister</a>{% endif %}
 {#                {% if date(user.created_at) < date() %}#}
 {#                    #}{# always! #}
 {#                {% endif %}#}
@@ -93,12 +96,12 @@
 
 
             {% if sortie.etat.libelle == 'cree' and   sortie.organisateur.id==app.user.id and sortie.dateLimite > date() and sortie.etat.id!=3%}
-                <a href="{{ path('publier', {'id': sortie.id}) }}" class="btn-success"  type="button">Publier</a>
+                <a href="{{ path('publier', {'id': sortie.id}) }}"  type="button">Publier</a>
             {% endif %}
 
 
             {% if sortie.organisateur.id == app.user.id and sortie.etat.id != 4 and sortie.etat.id != 3 and sortie.etat.id != 5 %}
-                <a href="{{ path ('annulerSortie',{'id': sortie.id}) }}" class="btn-success"  type="button">Annuler</a>
+                <a href="{{ path ('annulerSortie',{'id': sortie.id}) }}" class=" bg-danger"   type="button">Annuler</a>
             {% endif %}
             </td>
 
