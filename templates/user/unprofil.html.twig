@@ -32,7 +32,8 @@
             <td>{{ unProfil.email}}</td>
             <td>{% if unProfil.administrateur  %} oui{% else %}non{% endif %}</td>
             <td> {{ unProfil.site.nom}}</td>
-            <td>{{ unProfil.picture }}</td>
+            <td>{% if unProfil.picture == true %}<img src=" {{ asset('img/' ~ unProfil.picture) }}"/>{% else %}  <img src="{{ asset('img/default.jpg')}}" alt="">{% endif %} </td>
+
         </tr>
 
 

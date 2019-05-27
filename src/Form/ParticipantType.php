@@ -7,6 +7,7 @@ use App\Entity\Site;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,6 +23,7 @@ class ParticipantType extends AbstractType
             ->add('email')
             ->add('administrateur')
             ->add('actif')
+            ->add('picture', FileType::class, array('label' => 'Photo (png, jpeg)','data_class'=>null))
             ->add('Site', EntityType::class,['class'=>Site::class,'query_builder'
             => function(EntityRepository $er){
                 return $er->createQueryBuilder('s')

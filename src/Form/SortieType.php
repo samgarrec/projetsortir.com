@@ -27,7 +27,7 @@ class SortieType extends AbstractType
             ->add('infoSortie', TextareaType::class)
             ->add('lieu', EntityType::class, ['class' => Lieu::class, 'choice_label' => 'nom'])
             ->add('enregistrer', SubmitType::class, ['label' => 'Enregistrer'])
-            ->add('publier', SubmitType::class, ['label' => 'Publier une sortie'])
+
             ->add('annuler', SubmitType::class, ['label' => 'Annuler']);
     }
 

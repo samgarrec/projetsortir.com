@@ -21,6 +21,7 @@ class ChangePasswordType extends AbstractType
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les deux mots de passe doivent être identiques',
+                'mapped'=>false,
                 'options' => array(
                     'attr' => array(
                         'class' => 'password-field'
@@ -36,8 +37,6 @@ class ChangePasswordType extends AbstractType
     }
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Participant::class,
-        ]);
+
     }
 }
