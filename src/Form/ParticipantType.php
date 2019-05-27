@@ -29,7 +29,7 @@ class ParticipantType extends AbstractType
                     ->orderBy('s.nom','ASC');
 
                 },'choice_label'=>'nom'])
-            ->add('picture', FileType::class, array('label' => 'Picture (png, jpeg)', 'required' => false));
+            ->add('picture', FileType::class, array('label' => 'Picture (png, jpeg)', 'data_class'=> null, 'required' => false));
     }
 
     public function configureOptions(OptionsResolver $resolver)
