@@ -1,11 +1,11 @@
 {% extends ('base.html.twig') %}
 
-{% block title %}afficher une sortie|| {{ parent () }} {% endblock%}
+{% block title %}Afficher une sortie|| {{ parent () }} {% endblock%}
 
 {% block main %}
 
 
-    <h1>voici le detail de {{ sortie.nom }}</h1>
+    <h1>Détail de {{ sortie.nom }}</h1>
     {% set present=false %}
 
     {% for participant in sortie.participants %}

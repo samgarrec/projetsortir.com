@@ -35,7 +35,7 @@ class UserController extends Controller
         $authenticationUtils = $this->get('security.authentication_utils');
         if($authenticationUtils->getLastAuthenticationError()){
 
-            $error='mauvais identifiants';
+            $error='Identifiant ou mot de passe incorrect';
         }else{
 
             $error=null;
@@ -121,10 +121,6 @@ class UserController extends Controller
 
             $this->addFlash("success", "Vos informations ont bien été enregistrées");
             $this->redirectToRoute("monProfil");
-
-            $this->addFlash("success", "Vos modifications ont bien été prises en compte");
-            $this->redirectToRoute("monProfil");
-
         }
 
         return $this->render ("user/profil.html.twig", ["registerForm"=>$registerForm->createView()]);
@@ -141,13 +137,6 @@ class UserController extends Controller
 
 
                         return $this->render ("user/unprofil.html.twig", ["unProfil"=>$p]);
-
-
-
-
-
-
-
     }
 
 
@@ -234,18 +223,18 @@ class UserController extends Controller
                 $em->persist($user);
                 $em->flush();
 
-                $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
+                $this->addFlash('notice', 'Votre mot de passe a bien été modifié !');
 
                 return $this->redirectToRoute('profile');
             } else {
-                $form->addError(new FormError('Ancien mot de passe incorrect'));
+                $form->addError(new FormError('Votre ancien mot de passe est incorrect'));
             }
         }
             return $this->render('user/changePassword.html.twig',["form" => $form->createView()
 
             ]);
         }
-        //si pas de form soumis on envoi vers la page de modification
+        //si pas de form soumis on envoie vers la page de modification
 
 
 }

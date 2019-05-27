@@ -1,20 +1,21 @@
 {% extends ('base.html.twig') %}
 
-{% block title %}afficher un profil|| {{ parent () }} {% endblock%}
+{% block title %}Afficher un profil | {{ parent () }} {% endblock%}
 
 {% block main %}
 
 
-    <h1>voici le profil de {{ unProfil.username }}</h1><table class="table">
+    <h1>Profil de {{ unProfil.username }}</h1><table class="table">
     <thead>
     <tr>
-        <th scope="col">id</th>
-        <th scope="col">nom</th>
-        <th scope="col">prenom</th>
-        <th scope="col">telephone</th>
-        <th scope="col">email</th>
-        <th scope="col">admin</th>
-        <th scope="col">site</th>
+       {# <th scope="col">Id</th> #}
+        <th scope="col">Nom</th>
+        <th scope="col">Prénom</th>
+        <th scope="col">Téléphone</th>
+        <th scope="col">Email</th>
+        <th scope="col">Administrateur</th>
+        <th scope="col">Site</th>
+        <th scope="col">Picture</th>
 
 
 
@@ -24,17 +25,14 @@
 
         {#        {% if sortie.etat.libelle !='cree' or sortie.etat.libelle!='annule' or sortie.organisateur.id==app.user.id %}#}
         <tr>
-            <td>{{ unProfil.id }}</td>
+           {# <td>{{ unProfil.id }}</td> #}
             <td>{{ unProfil.nom }}</td>
             <td>{{ unProfil.prenom }}</td>
             <td>{{ unProfil.telephone }}</td>
             <td>{{ unProfil.email}}</td>
             <td>{% if unProfil.administrateur  %} oui{% else %}non{% endif %}</td>
             <td> {{ unProfil.site.nom}}</td>
-
-
-
-
+            <td>{{ unProfil.picture }}</td>
         </tr>
 
 
@@ -44,7 +42,7 @@
     </tbody>
 </table>
 {% if app.user== unProfil %}
-    <a href="{{ path ('monProfil',{'id': unProfil.id })}}">modifier mon profil</a>
+    <a href="{{ path ('monProfil',{'id': unProfil.id })}}">Modifier mon profil</a>
 {% endif %}
 
 

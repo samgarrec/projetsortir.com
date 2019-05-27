@@ -53,7 +53,7 @@ class SortieController extends Controller
             } else {
                 $this->addFlash(
                     'notice',
-                    'pas de resultats ...'
+                    'Aucun résultat ...'
                 );
                 $this->redirectToRoute("sortie");
             }
@@ -152,12 +152,12 @@ class SortieController extends Controller
 
 
             if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
-    $sortie->setInfoSortie('motif de l\'annulation : '.$sortie->getInfoSortie());
+    $sortie->setInfoSortie('Motif de l\'annulation : '.$sortie->getInfoSortie());
                 $sortie->setEtat($etat);
                 $em->persist($sortie);
                 $em->flush();
 
-                $this->addFlash("notice", "Votre sortie a ete annule");
+                $this->addFlash("notice", "Votre sortie a été annulée");
                 return $this->redirectToRoute('sortie');
 
             }

@@ -38,26 +38,26 @@ class SearchFormType extends AbstractType
             ->add('nomDeLaSortie',\Symfony\Component\Form\Extension\Core\Type\TextType::class, [ 'required'=>false
             ])
             ->add('dateDepart',DateType::class, [
-                'widget' => 'choice',
+                'widget' => 'choice', 'data' => new \DateTime("now")
             ])
             ->add('dateFin',DateType::class, [
-                'widget' => 'choice',
+                'widget' => 'choice', 'data' => new \DateTime("now")
             ])
 
             ->add('isOrganisateur', CheckboxType::class, [
-                'label'    => 'Mes evennements',
+                'label'    => 'Mes événements',
                 'required' => false,
             ])
             ->add('isRegistred', CheckboxType::class, [
-                'label'    => 'Sorties auquelles je suis inscrit',
+                'label'    => 'Sorties auxquelles je suis inscrit(e)',
                 'required' => false,
             ])
          //   ->add('isNotRegistred', CheckboxType::class, [
-           //     'label'    => 'Sorties auquelles je ne suis pas inscrit',
+           //     'label'    => 'Sorties auxquelles je ne suis pas inscrit(e)',
            //     'required' => false,
           //  ])
             ->add('pastSorties', CheckboxType::class, [
-                'label'    => 'Sorties passées ',
+                'label'    => 'Sorties anciennes',
                 'required' => false,
             ])
         ->add('rechercher',SubmitType::class);
