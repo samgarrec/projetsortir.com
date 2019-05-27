@@ -9,13 +9,14 @@
     <thead>
     <tr>
        {# <th scope="col">Id</th> #}
+        <th scope="col">Picture</th>
         <th scope="col">Nom</th>
         <th scope="col">Prénom</th>
         <th scope="col">Téléphone</th>
         <th scope="col">Email</th>
         <th scope="col">Administrateur</th>
         <th scope="col">Site</th>
-        <th scope="col">Picture</th>
+
 
 
 
@@ -26,6 +27,7 @@
         {#        {% if sortie.etat.libelle !='cree' or sortie.etat.libelle!='annule' or sortie.organisateur.id==app.user.id %}#}
         <tr>
            {# <td>{{ unProfil.id }}</td> #}
+            <td><img src="{{ asset ('img/') ~ unProfil.picture }}" alt="Avatar"></td>
             <td>{{ unProfil.nom }}</td>
             <td>{{ unProfil.prenom }}</td>
             <td>{{ unProfil.telephone }}</td>
@@ -35,9 +37,6 @@
             <td>{% if unProfil.picture == true %}<img src=" {{ asset('img/' ~ unProfil.picture) }}"/>{% else %}  <img src="{{ asset('img/default.jpg')}}" alt="">{% endif %} </td>
 
         </tr>
-
-
-
 
 
     </tbody>
