@@ -47,7 +47,7 @@ class SortieController extends Controller
             if ($sorties) {
                 $this->addFlash(
                     'notice',
-                    'Resultat de votre recherche');
+                    'Résultat de votre recherche');
                 return $this->render("sortie/sortie.html.twig", [
                     'searchForm' => $searchForm->createView(), "sorties" => $sorties]);
             } else {
@@ -152,7 +152,7 @@ class SortieController extends Controller
 
 
             if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
-    $sortie->setInfoSortie('Motif de l\'annulation : '.$sortie->getInfoSortie());
+                $sortie->setInfoSortie('Motif de l\'annulation : '.$sortie->getInfoSortie());
                 $sortie->setEtat($etat);
                 $em->persist($sortie);
                 $em->flush();

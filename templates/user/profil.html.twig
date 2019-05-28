@@ -14,12 +14,12 @@
     <div>
         {{ form_start(registerForm) }}
         {{ form_widget(registerForm) }}
-        <button type="submit">Enregister</button>
+        <button class="btn btn-outline-light" type="submit">Enregister</button>
         <a type="button" href="{{ path ('monProfil') }}">Annuler</a>
         {{ form_end(registerForm) }}
     </div>
 
-    <a href="{{ path ('changePassword') }}" type="btn">Modifier mon mot de passe</a>
+    <a href="{{ path ('changePassword') }}" type="btn btn-outline-light">Modifier mon mot de passe</a>
 
 
 {% endblock %}

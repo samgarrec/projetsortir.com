@@ -60,7 +60,10 @@ class SearchFormType extends AbstractType
                 'label'    => 'Sorties anciennes',
                 'required' => false,
             ])
-        ->add('rechercher',SubmitType::class);
+        ->add('rechercher',SubmitType::class, array(
+            'attr' => array(
+                'class' => 'btn btn-outline-light'
+            )));
 
 
 
