@@ -1,6 +1,6 @@
 {% extends ('base.html.twig') %}
 
-{% block title %}Détails | {{ parent () }} {% endblock%}
+{% block title %}Détails | {{ parent () }} {% endblock %}
 
 {% block main %}
 
@@ -12,93 +12,94 @@
         {% if app.user.username == participant.username %}
             {% set present=true %} {% endif %}
     {% endfor %}
-    {% if present and sortie.dateLimite > date() and sortie.etat.id!=3%}
-    <a href="{{ path ('desistement', {'id': sortie.id}) }}" class="btn btn-outline-dark" type="button">Se désister</a>{% endif %}
+    {% if present and sortie.dateLimite > date() and sortie.etat.id!=3 %}
+    <a href="{{ path ('desistement', {'id': sortie.id}) }}" class="btn btn-outline-dark" type="button">Se
+        désister</a>{% endif %}
     {#                {% if date(user.created_at) < date() %}#}
     {#                    #}{# always! #}
     {#                {% endif %}#}
     {% if present==false and sortie.dateLimite > date() and sortie.etat.id==2 and sortie.participants.count < sortie.nbInscriptionMax %}
 
-        <a href="{{ path ('inscription',{'id': sortie.id}) }}"  class="btn btn-outline-success" type="button">S'inscrire</a>
+        <a href="{{ path ('inscription',{'id': sortie.id}) }}" class="btn btn-outline-success"
+           type="button">S'inscrire</a>
 
 
     {% endif %}
 
 
-    {% if sortie.etat.libelle == 'cree' and   sortie.organisateur.id==app.user.id and sortie.dateLimite > date() and sortie.etat.id!=3%}
-        <a href="{{ path('publier', {'id': sortie.id}) }}" class="btn btn-outline-success"  type="button">Publier</a>
+    {% if sortie.etat.libelle == 'cree' and   sortie.organisateur.id==app.user.id and sortie.dateLimite > date() and sortie.etat.id!=3 %}
+        <a href="{{ path('publier', {'id': sortie.id}) }}" class="btn btn-outline-success" type="button">Publier</a>
     {% endif %}
 
 
     {% if sortie.organisateur.id == app.user.id and sortie.etat.id != 4 and sortie.etat.id != 3 and sortie.etat.id != 5 %}
-        <a href="{{ path ('annulerSortie',{'id': sortie.id}) }}" class="btn btn-outline-danger"  type="button">Annuler</a>
+        <a href="{{ path ('annulerSortie',{'id': sortie.id}) }}" class="btn btn-outline-danger"
+           type="button">Annuler</a>
     {% endif %}
     <table class="table table-striped table-dark text-center">
-    <thead>
-    <tr class="bg-white">
-        <th scope="col">Id</th>
-        <th scope="col">Nom</th>
-        <th scope="col">Informations</th>
-        <th scope="col">Ville</th>
-        <th scope="col">Date</th>
-        <th scope="col">Clôture</th>
-        <th scope="col">Participants</th>
-        <th scope="col">Statut</th>
+        <thead>
+        <tr class="bg-white">
+            <th scope="col">Id</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Informations</th>
+            <th scope="col">Ville</th>
+            <th scope="col">Date</th>
+            <th scope="col">Clôture</th>
+            <th scope="col">Participants</th>
+            <th scope="col">Statut</th>
 
 
+        </tr>
+        </thead>
+        <tbody>
 
+        {#        {% if sortie.etat.libelle !='cree' or sortie.etat.libelle!='annule' or sortie.organisateur.id==app.user.id %}#}
+        <tr class="bg-white">
+            <td>{{ sortie.id }}</td>
+            <td>{{ sortie.nom }}</td>
+            <td>{{ sortie.infoSortie }}</td>
+            <td>{{ sortie.lieu.ville.nom }}</td>
+            <td>{{ sortie.dateheureDebut| date(('d/m/Y - H:i:s')) }}</td>
+            <td>{{ sortie.dateLimite| date(('d/m/Y')) }}</td>
+            <td>{{ sortie.participants.count }}/{{ sortie.nbInscriptionMax }}</td>
+            <td> {{ sortie.etat.libelle }}</td>
+        </tr>
 
-    </tr>
-    </thead>
-    <tbody>
+        </tbody>
+    </table>
 
-    {#        {% if sortie.etat.libelle !='cree' or sortie.etat.libelle!='annule' or sortie.organisateur.id==app.user.id %}#}
-    <tr class="bg-white">
-        <td>{{ sortie.id }}</td>
-        <td>{{ sortie.nom }}</td>
-        <td>{{ sortie.infoSortie }}</td>
-        <td>{{ sortie.lieu.ville.nom }}</td>
-        <td>{{ sortie.dateheureDebut| date(('d/m/Y - H:i:s')) }}</td>
-        <td>{{ sortie.dateLimite| date(('d/m/Y'))}}</td>
-        <td>{{ sortie.participants.count }}/{{ sortie.nbInscriptionMax }}</td>
-        <td> {{ sortie.etat.libelle}}</td>
-    </tr>
+    <div class="row">
+        <table class="table table-striped table-dark text-center col-5 offset-1">
+            <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Site</th>
+            </tr>
+            </thead>
+            <tbody>
 
-    </tbody>
-</table>
-
-        <div class="row">
-            <table class="table table-striped table-dark text-center col-5 offset-1">
-                <thead>
+            {#        {% if sortie.etat.libelle !='cree' or sortie.etat.libelle!='annule' or sortie.organisateur.id==app.user.id %}#}
+            {% for participant in sortie.participants %}
                 <tr>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Prénom</th>
-                    <th scope="col">Site</th>
+
+                    <td><a href="{{ path ('un-profil',{'id': participant.id}) }}">{{ participant.nom }} </a></td>
+                    <td>{{ participant.prenom }}</td>
+
+                    <td> {{ participant.site.nom }}</td>
+
                 </tr>
-                </thead>
-                <tbody>
+            {% endfor %}
 
-                {#        {% if sortie.etat.libelle !='cree' or sortie.etat.libelle!='annule' or sortie.organisateur.id==app.user.id %}#}
-                {% for participant in sortie.participants %}
-                     <tr>
-
-                        <td><a href="{{ path ('un-profil',{'id': participant.id}) }}">{{ participant.nom }} </a></td>
-                        <td>{{ participant.prenom }}</td>
-
-                        <td> {{ participant.site.nom}}</td>
-
-                     </tr>
-                {% endfor %}
-
-                </tbody>
-            </table>
+            </tbody>
+        </table>
 
 
-    <div id="map" class="col-lg-4 offset-1 col-sm-12 " style="height: 400px" >
+        <div id="map" class="col-lg-4 offset-1 col-sm-12 " style="height: 400px">
 
 
+        </div>
     </div>
-</div>
 
 
 
@@ -106,31 +107,33 @@
 
 {% endblock %}
 
-{%  block javascripts %}  {{ parent() }} ||
+{% block javascripts %}  {{ parent() }} ||
 
 
 
-        <script type="text/javascript">
-    // On initialise la latitude et la longitude de P (centre de la carte)
-    // var lat = 48.202047;
-    // var lon = -2.932644;
-    var macarte = null;
-    // Fonction d'initialisation de la carte
-    function initMap() {
-        // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
-        macarte = L.map('map').setView([ {{ sortie.lieu.latitude }}, {{ sortie.lieu.longitude }}], 6);
-        var marker = L.marker([{{ sortie.lieu.latitude }}, {{ sortie.lieu.longitude }}]).addTo(macarte);
-        // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
-        L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-            // Il est toujours bien de laisser le lien vers la source des données
-            attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
-            minZoom: 1,
-            maxZoom: 20
-        }).addTo(macarte);
-    }
-    window.onload = function(){
-        // Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
-        initMap();
-    };
-</script>
+    <script type="text/javascript">
+        // On initialise la latitude et la longitude de P (centre de la carte)
+        // var lat = 48.202047;
+        // var lon = -2.932644;
+        var macarte = null;
+
+        // Fonction d'initialisation de la carte
+        function initMap() {
+            // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
+            macarte = L.map('map').setView([ {{ sortie.lieu.latitude }}, {{ sortie.lieu.longitude }}], 6);
+            var marker = L.marker([{{ sortie.lieu.latitude }}, {{ sortie.lieu.longitude }}]).addTo(macarte);
+            // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
+            L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                // Il est toujours bien de laisser le lien vers la source des données
+                attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+                minZoom: 1,
+                maxZoom: 20
+            }).addTo(macarte);
+        }
+
+        window.onload = function () {
+            // Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
+            initMap();
+        };
+    </script>
 {% endblock %}

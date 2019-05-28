@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,9 +11,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ParticipantRepository")
- *  @UniqueEntity("username",message="Ce pseudo existe déjà. Merci d'en choisir un autre")
+ * @UniqueEntity("username",message="Ce pseudo existe déjà. Merci d'en choisir un autre")
  */
-class Participant implements  UserInterface
+class Participant implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -84,7 +85,6 @@ class Participant implements  UserInterface
      */
     private $picture;
 
- 
 
     public function __construct()
     {
@@ -264,10 +264,11 @@ class Participant implements  UserInterface
 
     public function getRoles()
     {
-        if($this->getAdministrateur()){
-        return["ROLE_ADMIN"];}
-        else{
-        return ["ROLE_USER"];}
+        if ($this->getAdministrateur()) {
+            return ["ROLE_ADMIN"];
+        } else {
+            return ["ROLE_USER"];
+        }
     }
 
     public function getSalt()
@@ -285,7 +286,7 @@ class Participant implements  UserInterface
         return $this->picture;
     }
 
-    public function setPicture( $picture): self
+    public function setPicture($picture): self
     {
         $this->picture = $picture;
 

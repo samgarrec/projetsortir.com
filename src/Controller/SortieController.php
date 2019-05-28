@@ -72,7 +72,7 @@ class SortieController extends Controller
     {
         $sortie = new Sortie();
         // Création du formulaire
-        $addSortieForm = $this->createForm(SortieType:: class, $sortie);
+        $addSortieForm = $this->createForm(SortieType::class, $sortie);
         // Récupération des données du formulaire
         $addSortieForm->handleRequest($request);
 
@@ -147,9 +147,8 @@ class SortieController extends Controller
         if ($sortie->getOrganisateur() == $this->getUser()) {
 
 
-
             if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
-                $sortie->setInfoSortie('Motif de l\'annulation : '.$sortie->getInfoSortie());
+                $sortie->setInfoSortie('Motif de l\'annulation : ' . $sortie->getInfoSortie());
                 $sortie->setEtat($etat);
                 $em->persist($sortie);
                 $em->flush();
@@ -173,24 +172,23 @@ class SortieController extends Controller
     public function requeteAjax(Request $request, EntityManagerInterface $em)
     {
 
-        $select= $request->request->get('choix');
-        $lieux= $em->getRepository(Lieu::class)->findBy([
-            'Ville'=>$select
+        $select = $request->request->get('choix');
+        $lieux = $em->getRepository(Lieu::class)->findBy([
+            'Ville' => $select
         ]);
-        $lieuTab=[];
-        foreach ($lieux as $lieu){
-            $lieuTab[$lieu->getId()]= [
+        $lieuTab = [];
+        foreach ($lieux as $lieu) {
+            $lieuTab[$lieu->getId()] = [
                 'nom' => $lieu->getNom(),
-                'rue'=> $lieu->getRue(),
-                'lat'=>$lieu->getLatitude(),
-                'long'=>$lieu->getLongitude()
+                'rue' => $lieu->getRue(),
+                'lat' => $lieu->getLatitude(),
+                'long' => $lieu->getLongitude()
 
-                ]
-;
+            ];
         }
-       $response= new Response(json_encode($lieuTab));
+        $response = new Response(json_encode($lieuTab));
 
-        $response->headers->set('Content-Type','application/json');
+        $response->headers->set('Content-Type', 'application/json');
 
         return $response;
 
@@ -198,23 +196,15 @@ class SortieController extends Controller
     }
 
 
-
     /**
      *
      * @Route("/sortie/{id}", name="une-sortie",requirements={"id":"\d+"})
      */
-    public function showSortie (Request $request, Sortie $sortie)
+    public function showSortie(Request $request, Sortie $sortie)
     {
 
 
-
-
-        return $this->render ("sortie/uneSortie.html.twig", ["sortie"=>$sortie]);
-
-
-
-
-
+        return $this->render("sortie/uneSortie.html.twig", ["sortie" => $sortie]);
 
 
     }

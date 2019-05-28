@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Command;
+
 use App\Entity\Sortie;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -51,10 +52,10 @@ class GestionSortiesCommand extends Command
                 $sortie->setEtat($etat);
                 $this->em->flush($sortie);
             }
-                if ($sortie->getDateheureDebut() <= new \DateTime('now - 1 month')) {
-                    $etat = $etatRepository->find(6);
-                    $sortie->setEtat($etat);
-                    $this->em->flush($sortie);
+            if ($sortie->getDateheureDebut() <= new \DateTime('now - 1 month')) {
+                $etat = $etatRepository->find(6);
+                $sortie->setEtat($etat);
+                $this->em->flush($sortie);
 
             }
 

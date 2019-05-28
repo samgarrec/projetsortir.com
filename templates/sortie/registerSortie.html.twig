@@ -1,4 +1,4 @@
-{%  extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Créer une sortie | {{ parent () }}{% endblock %}
 
@@ -19,24 +19,24 @@
         $(document).ready(function () {
             $('#sortie_ville').change();
         });
-        $('#sortie_ville').change(function(e) {
+        $('#sortie_ville').change(function (e) {
 
-            var choix=$(this).val();
+            var choix = $(this).val();
             $.ajax({
-                url:"{{ path('requeteAjax') }}",
-                type:'POST',
-                dataType:'json',
-                data:{'choix':choix},
-                async:true,
+                url: "{{ path('requeteAjax') }}",
+                type: 'POST',
+                dataType: 'json',
+                data: {'choix': choix},
+                async: true,
                 success: function (data) {
 
                     $('#sortie_lieu').empty();
-                    $.each(data,function (id,lieu){
+                    $.each(data, function (id, lieu) {
                         $('#listeAttr').empty();
-                        $('#sortie_lieu').append('<option value = "'+id+ '">' +lieu.nom+'</option>')
+                        $('#sortie_lieu').append('<option value = "' + id + '">' + lieu.nom + '</option>')
 
 
-                        });
+                    });
 
 
                 }
@@ -44,7 +44,7 @@
 
             });
             e.preventDefault()
-;
+            ;
         });
 
 

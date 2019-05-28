@@ -23,7 +23,7 @@ class SortieType extends AbstractType
         $builder
             ->add('nom', TextType::class)
             ->add('dateheureDebut', DateTimeType::class, ['widget'=>'choice',
-    'format'=>'y-M-d hh:mm ', 'label' => 'Date et heure de début'])
+                'format'=>'y-M-d hh:mm ', 'label' => 'Date et heure de début'])
 
             ->add('dateLimite', DateType::class, ['widget' => 'choice', 'data' => new \DateTime("now"), 'label'=> 'Date limite d\'inscription'])
             ->add('nbInscriptionMax', IntegerType::class, ['label'=>'Nombre de participants maximum'])
