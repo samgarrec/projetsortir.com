@@ -4,7 +4,6 @@ namespace App\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Entity\Participant;
 
-use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\ChangePasswordType;
 use App\Form\ParticipantType;
