@@ -22,16 +22,19 @@ class SortieType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class)
-            ->add('dateheureDebut', DateTimeType::class, ['widget'=>'choice',
-                'format'=>'y-M-d hh:mm ', 'label' => 'Date et heure de début'])
+            ->add('dateheureDebut', DateTimeType::class, ['widget'=>'choice'
+    ])
 
-            ->add('dateLimite', DateType::class, ['widget' => 'choice', 'data' => new \DateTime("now"), 'label'=> 'Date limite d\'inscription'])
-            ->add('nbInscriptionMax', IntegerType::class, ['label'=>'Nombre de participants maximum'])
-            ->add('duree', IntegerType::class, ['label' => 'Durée (en minutes):'])
-            ->add('infoSortie', TextareaType::class, ['label'=>'Description'])
-            ->add('lieu', EntityType::class, ['class' => Lieu::class, 'choice_label' => 'nom'])
-            ->add('enregistrer', SubmitType::class, ['label' => 'Enregistrer', 'class' => 'btn btn-outline-success'])
-            ->add('annuler', SubmitType::class, ['label' => 'Annuler', 'class' => 'btn btn-outline-danger']);
+            ->add('dateLimite', DateType::class, ['widget' => 'choice', 'data' => new \DateTime("now")])
+            ->add('nbInscriptionMax', IntegerType::class)
+            ->add('duree', IntegerType::class, ['label' => 'Durée :'])
+            ->add('infoSortie', TextareaType::class)
+                ->add('ville', EntityType::class, ['class' => Ville::class, 'choice_label' => 'nom','mapped'=>false])
+
+                ->add('lieu', EntityType::class, ['class' => Lieu::class, 'choice_label' => 'nom'])
+            ->add('enregistrer', SubmitType::class, ['label' => 'Enregistrer'])
+
+            ->add('annuler', SubmitType::class, ['label' => 'Annuler']);
     }
 
 

@@ -29,7 +29,8 @@ class ParticipantType extends AbstractType
                 return $er->createQueryBuilder('s')
                     ->orderBy('s.nom','ASC');
 
-                },'choice_label'=>'nom']);
+                },'choice_label'=>'nom'])
+            ->add('picture', FileType::class, array('label' => 'Picture (png, jpeg)', 'data_class'=> null, 'required' => false));
     }
 
     public function configureOptions(OptionsResolver $resolver)

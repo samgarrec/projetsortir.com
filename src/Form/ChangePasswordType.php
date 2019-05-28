@@ -31,7 +31,7 @@ class ChangePasswordType extends AbstractType
             ))
             ->add('submit', SubmitType::class, array(
                 'attr' => array(
-                    'class' => 'btn btn-outline-success'
+                    'class' => 'btn btn-primary btn-block'
                 )
             ));
     }
