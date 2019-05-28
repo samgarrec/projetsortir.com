@@ -20,12 +20,8 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class UserController extends Controller
 {
-    /**
-     * @Route("/", name="login")
-     */
-    /**
-     * on nomme la route login car dans le fichier
-     * security.yaml on a login_path: login
+     /**
+     * On nomme la route login car dans le fichier security.yaml on a login_path: login
      * @Route("/", name="login")
      */
     public function login()
@@ -47,8 +43,8 @@ class UserController extends Controller
     }
 
     /**
-     * Symfony gère entierement cette route il suffit de l'appeler logout.
-     * Penser à paramètrer le fichier security.yaml pour rediriger la déconnexion.
+     * Symfony gère entierement cette route puisqu'on l'a appelée logout.
+     * La redirection a été paramètrer dans le fichier security.yaml.
      * @Route("/logout", name="logout")
      */
     public function logout(){}
