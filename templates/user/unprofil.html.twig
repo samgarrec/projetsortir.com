@@ -25,7 +25,11 @@
         {#        {% if sortie.etat.libelle !='cree' or sortie.etat.libelle!='annule' or sortie.organisateur.id==app.user.id %}#}
         <tr>
            {# <td>{{ unProfil.id }}</td> #}
+<<<<<<< HEAD
+            <td>{% if unProfil.picture == true %}<img src="{{ asset ('img/') ~ unProfil.picture }}" alt="Avatar">{% else %}<img src="{{ asset ('img/default.png')}}" alt="Avatar">{% endif %}</td>
+=======
             <td>{% if unProfil.picture == true %}<img src=" {{ asset('img/' ~ unProfil.picture) }}"/>{% else %}  <img src="{{ asset('img/default.jpg')}}" alt="">{% endif %} </td>
+>>>>>>> master
             <td>{{ unProfil.nom }}</td>
             <td>{{ unProfil.prenom }}</td>
 
