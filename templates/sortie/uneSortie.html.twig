@@ -79,12 +79,10 @@
             <table class="table col-5 offset-1">
                 <thead>
                 <tr>
-                    <th scope="col">id</th>
+
                     <th scope="col">nom</th>
                     <th scope="col">prenom</th>
-                    <th scope="col">telephone</th>
-                    <th scope="col">email</th>
-                    <th scope="col">admin</th>
+
                     <th scope="col">site</th>
 
 
@@ -96,12 +94,10 @@
                 {#        {% if sortie.etat.libelle !='cree' or sortie.etat.libelle!='annule' or sortie.organisateur.id==app.user.id %}#}
                 {% for participant in sortie.participants %}
                      <tr>
-                         <td>{{ participant.id }}</td>
+
                         <td><a href="{{ path ('un-profil',{'id': participant.id}) }}">{{ participant.nom }} </a></td>
                         <td>{{ participant.prenom }}</td>
-                        <td>{{ participant.telephone }}</td>
-                        <td>{{ participant.email}}</td>
-                        <td>{% if participant.administrateur  %} oui{% else %}non{% endif %}</td>
+
                         <td> {{ participant.site.nom}}</td>
 
 

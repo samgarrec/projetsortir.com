@@ -59,7 +59,7 @@
     </thead>
     <tbody>
     {% for sortie in sorties %}
-       {% if sortie.etat.libelle =='publiee' or sortie.etat.libelle !='cree' or sortie.organisateur.id==app.user.id %}
+       {% if sortie.etat.libelle =='Publiée' or sortie.etat.libelle !='Crée' or sortie.organisateur.id==app.user.id %}
             <tr {% if sortie.organisateur == app.user %}class="bg-success"  {% endif %}>
                 <td>{{ sortie.id }}</td>
             <td>{{ sortie.nom }}</td>
@@ -67,7 +67,7 @@
             <td>{{ sortie.dateheureDebut| date(('d/m/Y - H:i:s')) }}</td>
             <td>{{ sortie.dateLimite| date(('d/m/Y'))}}</td>
             <td>{{ sortie.participants.count }}/{{ sortie.nbInscriptionMax }}</td>
-            <td {% if sortie.etat.libelle =='annule' %}class="bg-danger"  {% endif %}> {{ sortie.etat.libelle}}</td>
+            <td {% if sortie.etat.libelle =='Annulé' %}class="bg-danger"  {% endif %}> {{ sortie.etat.libelle}}</td>
             {% set present=false %}
             <td>{% for participant in sortie.participants %}
                     {% if app.user.username == participant.username %}
@@ -83,7 +83,7 @@
                 <a href="{{ path('une-sortie',{'id': sortie.id}) }}" class="btn-primary" type="button">Afficher</a>{% endif %}
 
             {% if present and sortie.dateLimite > date() and sortie.etat.id!=3%}
-                <a href="{{ path ('desistement', {'id': sortie.id}) }}" class="btn-dark" type="button">Se désister</a>{% endif %}
+                <a href="{{ path ('desistement', {'id': sortie.id}) }}" class="btn-info" type="button">Se désister</a>{% endif %}
 {#                {% if date(user.created_at) < date() %}#}
 {#                    #}{# always! #}
 {#                {% endif %}#}
