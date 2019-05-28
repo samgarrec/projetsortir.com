@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Form\CancelType;
 use App\Form\ParticipantType;
@@ -26,10 +27,6 @@ class SortieController extends Controller
         $sorties = $this->getDoctrine()
             ->getRepository(Sortie::class)
             ->findAllUnderOneMonth();
-        foreach ($sorties as $sortie) {
-
-            dump($sortie->getLieu()->getRue());
-        }
 
         $searchForm = $this->createForm(SearchFormType:: class);
         $searchForm->handleRequest($request);
@@ -169,7 +166,36 @@ class SortieController extends Controller
         return $this->redirectToRoute('sortie');
     }
 
+    /**
+     *
+     * @Route("/sortie/ajax", name="requeteAjax")
+     */
+    public function requeteAjax(Request $request, EntityManagerInterface $em)
+    {
 
+        $select= $request->request->get('choix');
+        $lieux= $em->getRepository(Lieu::class)->findBy([
+            'Ville'=>$select
+        ]);
+        $lieuTab=[];
+        foreach ($lieux as $lieu){
+            $lieuTab[$lieu->getId()]= [
+                'nom' => $lieu->getNom(),
+                'rue'=> $lieu->getRue(),
+                'lat'=>$lieu->getLatitude(),
+                'long'=>$lieu->getLongitude()
+
+                ]
+;
+        }
+       $response= new Response(json_encode($lieuTab));
+
+        $response->headers->set('Content-Type','application/json');
+
+        return $response;
+
+
+    }
 
 
 

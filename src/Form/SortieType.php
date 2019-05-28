@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Entity\Ville;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -21,14 +22,16 @@ class SortieType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class)
-            ->add('dateheureDebut', DateTimeType::class, ['widget'=>'choice',
-    'format'=>'y-M-d hh:mm '])
+            ->add('dateheureDebut', DateTimeType::class, ['widget'=>'choice'
+    ])
 
             ->add('dateLimite', DateType::class, ['widget' => 'choice', 'data' => new \DateTime("now")])
             ->add('nbInscriptionMax', IntegerType::class)
             ->add('duree', IntegerType::class, ['label' => 'Durée :'])
             ->add('infoSortie', TextareaType::class)
-            ->add('lieu', EntityType::class, ['class' => Lieu::class, 'choice_label' => 'nom'])
+                ->add('ville', EntityType::class, ['class' => Ville::class, 'choice_label' => 'nom','mapped'=>false])
+
+                ->add('lieu', EntityType::class, ['class' => Lieu::class, 'choice_label' => 'nom'])
             ->add('enregistrer', SubmitType::class, ['label' => 'Enregistrer'])
 
             ->add('annuler', SubmitType::class, ['label' => 'Annuler']);

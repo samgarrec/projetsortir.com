@@ -6,7 +6,7 @@
     <div class="container">
 
 
-        <h1> Creer une sortie </h1>
+        <h1> Créer une sortie </h1>
         <div>
             {{ form_start(addSortieForm) }}
             {{ form_errors(addSortieForm) }}
@@ -15,6 +15,41 @@
             {{ form_end(addSortieForm) }}
         </div>
     </div>
+    <script>
+
+        $(document).ready(function () {
+            $('#sortie_ville').change();
+        });
+        $('#sortie_ville').change(function(e) {
+
+            var choix=$(this).val();
+            $.ajax({
+                url:"{{ path('requeteAjax') }}",
+                type:'POST',
+                dataType:'json',
+                data:{'choix':choix},
+                async:true,
+                success: function (data) {
+
+                    $('#sortie_lieu').empty();
+                    $.each(data,function (id,lieu){
+                        $('#listeAttr').empty();
+                        $('#sortie_lieu').append('<option value = "'+id+ '">' +lieu.nom+'</option>')
+
+
+                        });
+
+
+                }
+
+
+            });
+            e.preventDefault()
+;
+        });
+
+
+    </script>
 
 
 {% endblock %}
