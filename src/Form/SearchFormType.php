@@ -28,9 +28,7 @@ class SearchFormType extends AbstractType
             => function(EntityRepository $er){
                     return $er->createQueryBuilder('s')
                         ->orderBy('s.nom','ASC');
-
                 },'choice_label'=>'nom'])
-
 
             ->add('nomDeLaSortie',\Symfony\Component\Form\Extension\Core\Type\TextType::class,['required'=>false, 'label'=>'Nom de la sortie'])
             ->add('dateDepart',DateType::class, [

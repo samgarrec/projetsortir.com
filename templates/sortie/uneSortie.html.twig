@@ -39,7 +39,6 @@
     <table class="table table-striped table-dark text-center">
         <thead>
         <tr class="bg-white">
-            <th scope="col">Id</th>
             <th scope="col">Nom</th>
             <th scope="col">Informations</th>
             <th scope="col">Ville</th>
@@ -55,7 +54,6 @@
 
         {#        {% if sortie.etat.libelle !='cree' or sortie.etat.libelle!='annule' or sortie.organisateur.id==app.user.id %}#}
         <tr class="bg-white">
-            <td>{{ sortie.id }}</td>
             <td>{{ sortie.nom }}</td>
             <td>{{ sortie.infoSortie }}</td>
             <td>{{ sortie.lieu.ville.nom }}</td>

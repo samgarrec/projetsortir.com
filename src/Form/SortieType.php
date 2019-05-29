@@ -24,7 +24,7 @@ class SortieType extends AbstractType
             ->add('nom', TextType::class)
             ->add('dateheureDebut', DateTimeType::class, ['widget'=>'choice', 'label'=>'Date de la sortie'])
             ->add('dateLimite', DateType::class, ['widget' => 'choice', 'data' => new \DateTime("now"), 'label'=> 'Clôture d\'inscription' ])
-            ->add('nbInscriptionMax', IntegerType::class, ['label'=>'Nombre de participants maximum'])
+            ->add('nbInscriptionMax', IntegerType::class, ['label'=>'Nombre de participants'])
             ->add('duree', IntegerType::class, ['label' => 'Durée (en minutes):'])
             ->add('infoSortie', TextareaType::class, ['label' => 'Description'])
             ->add('ville', EntityType::class, ['class' => Ville::class, 'choice_label' => 'nom','mapped'=>false])
