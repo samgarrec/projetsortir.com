@@ -22,27 +22,23 @@ class SortieType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class)
-            ->add('dateheureDebut', DateTimeType::class, ['widget'=>'choice'
-    ])
+            ->add('dateheureDebut', DateTimeType::class, ['widget'=>'choice', 'label'=>'Date de la sortie'])
+            ->add('dateLimite', DateType::class, ['widget' => 'choice', 'data' => new \DateTime("now"), 'label'=> 'Clôture d\'inscription' ])
+            ->add('nbInscriptionMax', IntegerType::class, ['label'=>'Nombre de participants maximum'])
+            ->add('duree', IntegerType::class, ['label' => 'Durée (en minutes):'])
+            ->add('infoSortie', TextareaType::class, ['label' => 'Description'])
+            ->add('ville', EntityType::class, ['class' => Ville::class, 'choice_label' => 'nom','mapped'=>false])
+            ->add('lieu', EntityType::class, ['class' => Lieu::class, 'choice_label' => 'nom'])
+            ->add('enregistrer', SubmitType::class, array(
+                'attr' => array('class' => 'btn btn-outline-light')),  ['label' => 'Enregistrer'])
 
-            ->add('dateLimite', DateType::class, ['widget' => 'choice', 'data' => new \DateTime("now")])
-            ->add('nbInscriptionMax', IntegerType::class)
-            ->add('duree', IntegerType::class, ['label' => 'Durée :'])
-            ->add('infoSortie', TextareaType::class)
-                ->add('ville', EntityType::class, ['class' => Ville::class, 'choice_label' => 'nom','mapped'=>false])
-
-                ->add('lieu', EntityType::class, ['class' => Lieu::class, 'choice_label' => 'nom'])
-            ->add('enregistrer', SubmitType::class, ['label' => 'Enregistrer'])
-
-            ->add('annuler', SubmitType::class, ['label' => 'Annuler']);
+            ->add('annuler', SubmitType::class, array(
+                'attr' => array('class' => 'btn btn-outline-light')), ['label' => 'Annuler']);
     }
 
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Sortie::class,
-        ]);
-
+        $resolver->setDefaults(['data_class' => Sortie::class]);
     }
 }

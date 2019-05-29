@@ -25,16 +25,12 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class UserController extends Controller
 {
     /**
-     * @Route("/", name="login")
-     */
-    /**
-     * on nomme la route login car dans le fichier
+     * On nomme la route login car dans le fichier
      * security.yaml on a login_path: login
      * @Route("/", name="login")
      */
     public function login()
     {
-
         // Le service authentication_utils permet de récupérer le nom d'utilisateur
         // et l'erreur dans le cas où le formulaire a déjà été soumis mais était invalide
         // (mauvais mot de passe par exemple)
@@ -154,8 +150,6 @@ class UserController extends Controller
      */
     public function showProfile(Participant $p)
     {
-
-
         $participant = $p;
 
 
@@ -179,9 +173,9 @@ class UserController extends Controller
         $em->flush();
         $this->addFlash("notice", "Vos modifications ont bien été prises en compte");
 
-
         return $this->redirectToRoute('sortie');
     }
+
 
     /**
      * @return mixed
@@ -229,13 +223,10 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordType::class, $user);
-        dump($form);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
 
 
             $oldPassword = $request->request->get('change_password')['oldPassword'];
-
 
             // Si l'ancien mot de passe est bon
             if ($pwdEncoder->isPasswordValid($user, $oldPassword)) {
@@ -248,10 +239,11 @@ class UserController extends Controller
                 $this->addFlash('notice', 'Votre mot de passe a bien été modifié !');
 
                 return $this->redirectToRoute('sortie');
-            } else {
+            } else
+            {
                 $form->addError(new FormError('Votre ancien mot de passe est incorrect'));
             }
-        }
+
         return $this->render('user/changePassword.html.twig', ["form" => $form->createView()
 
         ]);

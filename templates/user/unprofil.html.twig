@@ -3,7 +3,7 @@
 {% block title %}Afficher un profil | {{ parent () }} {% endblock%}
 
 {% block main %}
-
+    <div class="container">
 
     <h1>Profil de {{ unProfil.username }}</h1><table class="table table table-striped table-dark text-center table-responsive">
     <thead>
@@ -32,6 +32,6 @@
     <a href="{{ path ('monProfil',{'id': unProfil.id })}}"class="btn btn-outline-success btn-sm">Modifier mon profil</a>
 {% endif %}
 
-
+    </div>
 
 {% endblock %}

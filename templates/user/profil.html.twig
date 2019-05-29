@@ -4,6 +4,7 @@
 {% block title %}Modifier mes informations || {{ parent () }} {% endblock%}
 
 {% block main %}
+    <div class="container">
     {% for message in app.flashes('success') %}
         <div class="btn-success">
             {{ message }}
@@ -24,7 +25,7 @@
         {{ form_end(registerForm) }}
 
     </div>
-
+    </div>
 
 
 {% endblock %}

@@ -57,7 +57,6 @@ body {
 
 
 
-
 .flash {
     padding: 20px;
     display: block;
@@ -109,3 +108,13 @@ body {
 
 }
 
+
+
+#imgProfil
+{
+    height:100px;
+}
+
+.btn-outline-light {
+    border-radius: 5px;
+}
