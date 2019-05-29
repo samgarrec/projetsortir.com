@@ -21,9 +21,8 @@ class ParticipantType extends AbstractType
             ->add('prenom')
             ->add('telephone')
             ->add('email')
-            ->add('administrateur')
-            ->add('actif')
-            ->add('picture', FileType::class, array('label' => 'Photo (png, jpeg)','data_class'=>null))
+
+            ->add('picture', FileType::class, array('label' => 'Photo (png, jpeg)','data_class'=>null,'required'=>false))
             ->add('Site', EntityType::class,['class'=>Site::class,'query_builder'
             => function(EntityRepository $er){
                 return $er->createQueryBuilder('s')

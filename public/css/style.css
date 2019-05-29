@@ -1,0 +1,62 @@
+body {
+    height: 100%;
+    background-color: #130375;
+    /* Center and scale the image nicely */
+    background-repeat: no-repeat;
+    background-size: 100%;
+    color: #FFFFFF;
+    font-family: 'Raleway', sans-serif;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background: #1d1a1a;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.navbar {
+    box-shadow: lightgrey;
+    background: white;
+    inset-block: auto;
+    font-weight: bold;
+
+}
+
+.bg-white {
+    color: darkblue;
+}
+.table td {
+    color: black;
+}
+
+.table td {
+    background-color: white;
+    color: black;
+}
+
+
+
+
+.flash {
+    padding: 20px;
+    display: block;
+    font-size: 24px;
+    color: #FFF;
+    font-weight: bold;
+}
+
+.flash-success {
+    background-color: #6b9311;
+}
+
+.flash-error {
+    background-color: #AA3333;
+}
+
+.h1 {
+    align-content: center;
+}

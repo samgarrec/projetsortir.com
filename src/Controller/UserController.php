@@ -119,7 +119,9 @@ class UserController extends Controller
 
         if ($registerForm->isSubmitted() && $registerForm->isValid())
         {
+
             $file = $participant->getPicture ();
+
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
             $file->move($this->getParameter ('pictures_directory'), $fileName);

@@ -5,7 +5,7 @@
 {% block main %}
 
 
-    <h1>Profil de {{ unProfil.username }}</h1><table class="table">
+    <h1>Profil de {{ unProfil.username }}</h1><table class="table table table-striped table-dark text-center table-responsive">
     <thead>
     <tr>
        {# <th scope="col">Id</th> #}
@@ -29,7 +29,7 @@
     </tbody>
 </table>
 {% if app.user== unProfil %}
-    <a href="{{ path ('monProfil',{'id': unProfil.id })}}">Modifier mon profil</a>
+    <a href="{{ path ('monProfil',{'id': unProfil.id })}}"class="btn btn-outline-success btn-sm">Modifier mon profil</a>
 {% endif %}
 
 
