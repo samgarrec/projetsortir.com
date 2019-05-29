@@ -6,7 +6,7 @@
 parameters:
     locale: 'fr'
     pictures_directory: '%kernel.project_dir%/public/img'
-
+    csv_directory: '%kernel.project_dir%/var/files'
 services:
     # default configuration for services in *this* file
     _defaults:

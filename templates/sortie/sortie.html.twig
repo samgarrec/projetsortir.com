@@ -87,7 +87,7 @@
 
 
             {% if sortie.etat.libelle == 'cree' and   sortie.organisateur.id==app.user.id and sortie.dateLimite > date() and sortie.etat.id!=3%}
-                <a href="{{ path('publier', {'id': sortie.id}) }}"  type="button">Publier</a>
+                <a href="{{ path('publier', {'id': sortie.id}) }}"   class="btn btn-outline-success btn-sm"  type="button">Publier</a>
             {% endif %}
 
 
