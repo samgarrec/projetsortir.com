@@ -10,9 +10,10 @@
             {{ form_start(addSortieForm) }}
             {{ form_errors(addSortieForm) }}
             {{ form_widget(addSortieForm) }}
-
+            <a href="{{ path('addlieu') }}" type="btn" class="btn-outline-light">Ajouter un lieu</a>
             {{ form_end(addSortieForm) }}
         </div>
+
     <script>
 
         $(document).ready(function () {

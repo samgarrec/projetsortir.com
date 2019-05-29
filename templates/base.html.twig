@@ -45,9 +45,18 @@
                             <a class="nav-link" id="acacher" href="{{ path ('nouvelle_sortie') }}">Créer une sortie</a>
                     </li>
                         {% else %}
+                            <li>
                             <a class="nav-link" href="{{ path ('login') }}">Connexion</a>
+                            </li>
                         {% endif %}
-                    </li>
+
+
+                    {% if app.user and app.user.administrateur %}
+                        <li>
+                            <a class="nav-link" href="{{ path ('participant-register') }}">Créer un utilisateur</a>
+                        </li>
+                    {% endif %}
+
                 </ul>
             </div>
         </nav>

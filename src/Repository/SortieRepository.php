@@ -39,6 +39,7 @@ class SortieRepository extends ServiceEntityRepository
         if (isset ($searchForm['nomDeLaSortie'])) {
             $nomSortie = $searchForm['nomDeLaSortie'];
             $qb->andWhere("s.nom  LIKE :nom");
+
             $qb->setParameter("nom", '%' . $nomSortie . '%');
         }
         if (isset ($searchForm['dateDepart'])) {

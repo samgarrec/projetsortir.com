@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Lieu;
 use App\Entity\Site;
 use App\Form\ImportType;
+use App\Form\LieuType;
+use App\Form\RegisterparticipantType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Entity\Participant;
 
@@ -66,7 +69,7 @@ class UserController extends Controller
     public function register(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
     {
         $participant = new Participant();
-        $registerForm = $this->createForm(ParticipantType:: class, $participant);
+        $registerForm = $this->createForm(RegisterparticipantType:: class, $participant);
         $registerForm->handleRequest($request);
 
         if ($registerForm->isSubmitted() && $registerForm->isValid()) {
@@ -318,6 +321,30 @@ class UserController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param UserPasswordEncoderInterface $encoder
+     * @return Response
+     * @Route("/addlieu", name="addlieu")
+     *
+     */
+    public function registerlieu(Request $request, EntityManagerInterface $em)
+    {
+        $lieu= new Lieu();
+        $lieuForm = $this->createForm(LieuType:: class, $lieu);
+        $lieuForm->handleRequest($request);
+
+        if ($lieuForm->isSubmitted() && $lieuForm->isValid()) {
+
+            $em->persist($lieu);
+            $em->flush();
+            $this->addFlash("success", "Vos informations ont bien été enregistrées");
+            $this->redirectToRoute("sortie");
+        }
+
+        return $this->render("user/addLieu.html.twig", ["lieuForm" => $lieuForm->createView()]);
+    }
 
 
 }
