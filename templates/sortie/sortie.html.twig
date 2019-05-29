@@ -3,7 +3,8 @@
 {% block title %}Mes sorties | {{ parent () }} {% endblock %}
 
 {% block main %}
-    {{ parent () }}
+    <div class="container">
+     {{ parent () }}
 
 
     {% for message in app.flashes('notice') %}
@@ -14,33 +15,35 @@
 
     <h1>Bienvenue sur la page d'affichage des sorties</h1>
 {{ form_start(searchForm ) }}
-    <div class="row ">
-        <div class="col-md-4">{{ form_row(searchForm.nomDeLaSortie) }}</div>
-        <div class="col-md-3 offset-2 " >{{ form_row(searchForm.dateDepart) }}</div>
-        <div class="col-md-3">{{ form_row(searchForm.dateFin) }}</div>
+        <div class="row">
+            <div class="col-md-6 ">{{ form_row(searchForm.Site) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">{{ form_row(searchForm.nomDeLaSortie) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6" >{{ form_row(searchForm.dateDepart) }}</div>
+            <div class="col-md-6">{{ form_row(searchForm.dateFin) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">{{ form_row(searchForm.isOrganisateur) }}</div>
+            <div class="col-md-4">{{ form_row(searchForm.isRegistred) }}</div>
+            <div class="col-md-4">{{ form_row(searchForm.pastSorties) }}</div>
+            {{ form_widget(searchForm) }}
+        </div>
+        <div>
+            <button type="submit" class="btn btn-outline-light btn-lg btn-block">Rechercher</button>
+        </div>
+            {{ form_end(searchForm) }}
+<div class="row" style="height: 50px;"></div>
 
-    </div>
-    <div class="row">
-        <div class="col-md-3">{{ form_row(searchForm.Site) }}</div>
-
-        <div class="col-md-2">{{ form_row(searchForm.isOrganisateur) }}</div>
-        <div class="col-md-2">{{ form_row(searchForm.isRegistred) }}</div>
-        <div class="col-md-2">{{ form_row(searchForm.pastSorties) }}</div>
-        {{ form_widget(searchForm) }}
-    </div>
-
-    {{ form_end(searchForm) }}
-
-
-
-</div>
 <div class="row">
     <table class="table table-striped table-dark text-center table-responsive ">
     <thead>
     <tr>
         <th scope="col">Nom</th>
         <th scope="col">Ville</th>
-        <th scope="col">Date et heure</th>
+        <th scope="col">Date de la sortie</th>
         <th scope="col">Clôture</th>
         <th scope="col">Participants</th>
         <th scope="col">Etat</th>
@@ -106,7 +109,7 @@
     </tbody>
     </table>
 </div>
-
+</div>
 
 
 {% endblock %}

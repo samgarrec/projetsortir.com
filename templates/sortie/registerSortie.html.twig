@@ -13,7 +13,6 @@
 
             {{ form_end(addSortieForm) }}
         </div>
-    </div>
     <script>
 
         $(document).ready(function () {
@@ -32,16 +31,9 @@
 
                     $('#sortie_lieu').empty();
                     $.each(data, function (id, lieu) {
-                        $('#listeAttr').empty();
-                        $('#sortie_lieu').append('<option value = "' + id + '">' + lieu.nom + '</option>')
-
-
-                    });
-
-
+                    $('#listeAttr').empty();
+                    $('#sortie_lieu').append('<option value = "' + id + '">' + lieu.nom + '</option>')});
                 }
-
-
             });
             e.preventDefault()
             ;
@@ -49,6 +41,6 @@
 
 
     </script>
-
+    </div>
 
 {% endblock %}

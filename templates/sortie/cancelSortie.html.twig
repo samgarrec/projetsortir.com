@@ -4,16 +4,11 @@
 
 {% block main %}
     <div class="container">
-    <div>
-    {% for message in app.flashes('success') %}
-        <div class="btn btn-outline-ligth">
-            Page de motif annulation {{ message }}
+        <div>
+            {% for message in app.flashes('success') %}
+                <div class="btn btn-outline-ligth">Page de motif annulation {{ message }}</div>
+            {% endfor %}
         </div>
-    {% endfor %}
-    <div>
+        {{ form(cancelForm) }}
     </div>
-
-    {{ form(cancelForm) }}
-
-
 {% endblock %}

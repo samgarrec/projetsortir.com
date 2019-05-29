@@ -40,7 +40,6 @@ body {
 
 
 
-
 .flash {
     padding: 20px;
     display: block;
@@ -59,4 +58,13 @@ body {
 
 .h1 {
     align-content: center;
+}
+
+#imgProfil
+{
+    height:100px;
+}
+
+.btn-outline-light {
+    border-radius: 5px;
 }

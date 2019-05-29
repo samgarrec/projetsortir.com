@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Form\CancelType;
-use App\Form\ParticipantType;
 use App\Form\SearchFormType;
 use App\Form\SortieType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,41 +21,32 @@ class SortieController extends Controller
      */
     public function searchSortie(Request $request, EntityManagerInterface $em)
     {
-
-        $sorties = $this->getDoctrine()
-            ->getRepository(Sortie::class)
-            ->findAllUnderOneMonth();
-
+        $sorties = $this->getDoctrine()->getRepository(Sortie::class)->findAllUnderOneMonth();
         $searchForm = $this->createForm(SearchFormType:: class);
         $searchForm->handleRequest($request);
 
         dump($searchForm->getData());
-        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-            // traitement des champs du formulaire
+        if ($searchForm->isSubmitted() && $searchForm->isValid())
+        {
+            // Traitement des champs du formulaire
             $sorties = $this->getDoctrine()
                 // Appel du repository et de ses méthodes
                 ->getRepository(Sortie::class)
                 // On passe les données du formulaire en paramètre du tableau
                 ->findBySearch($searchForm->getData(), $this->getUser());
 
-            dump($sorties);
-            if ($sorties) {
-                $this->addFlash(
-                    'notice',
-                    'Resultat de votre recherche');
-                return $this->render("sortie/sortie.html.twig", [
-                    'searchForm' => $searchForm->createView(), "sorties" => $sorties]);
-            } else {
-                $this->addFlash(
-                    'notice',
-                    'Aucun résultat ...'
-                );
+            if ($sorties)
+            {
+                $this->addFlash('notice','Resultat de votre recherche');
+
+                return $this->render("sortie/sortie.html.twig", ['searchForm' => $searchForm->createView(), "sorties" => $sorties]);
+            } else
+            {
+                $this->addFlash('notice','Aucun résultat ...');
                 $this->redirectToRoute("sortie");
             }
         }
-
-        return $this->render("sortie/sortie.html.twig", ["sorties" => $sorties,
-            'searchForm' => $searchForm->createView()]);
+        return $this->render("sortie/sortie.html.twig", ["sorties" => $sorties, 'searchForm' => $searchForm->createView()]);
     }
 
 
@@ -77,10 +66,12 @@ class SortieController extends Controller
         $addSortieForm->handleRequest($request);
 
         // Vérification de la validité du formulaire
-        if ($addSortieForm->isSubmitted() && $addSortieForm->isValid()) {
+        if ($addSortieForm->isSubmitted() && $addSortieForm->isValid())
+        {
             $nextAction = $addSortieForm->get('enregistrer')->isClicked() ? 'enregistrer' : 'publier';
 
-            if ($nextAction == 'enregistrer') {
+            if ($nextAction == 'enregistrer')
+            {
                 $this->redirectToRoute("nouvelle_sortie");
                 // Récupération des données de l'utilisateur
                 $user = $this->getUser();
@@ -97,11 +88,9 @@ class SortieController extends Controller
                 $em->persist($sortie);
                 $em->flush();
                 $this->addFlash("success", "Votre sortie a été créée");
-
             }
             return $this->redirectToRoute("nouvelle_sortie");
         }
-
         return $this->render("sortie/registerSortie.html.twig", ["addSortieForm" => $addSortieForm->createView()]);
     }
 
@@ -111,11 +100,11 @@ class SortieController extends Controller
      */
     public function updateSortie(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder, Sortie $sortie)
     {
-
         $addSortieForm = $this->createForm(SortieType:: class, $sortie);
         $addSortieForm->handleRequest($request);
 
-        if ($addSortieForm->isSubmitted() && $addSortieForm->isValid()) {
+        if ($addSortieForm->isSubmitted() && $addSortieForm->isValid())
+        {
             $em->persist($sortie);
             $em->flush();
 
@@ -124,12 +113,9 @@ class SortieController extends Controller
 
             $this->addFlash("success", "Vos modifications ont bien été prises en compte");
             $this->redirectToRoute("monProfil");
-
         }
 
-        return $this->render("sortie/registerSortie.html.twig", ["addSortieForm" => $addSortieForm->createView(),
-                "edit" => "edit"]
-        );
+        return $this->render("sortie/registerSortie.html.twig", ["addSortieForm" => $addSortieForm->createView(),"edit" => "edit"]);
     }
 
     /**
@@ -138,30 +124,24 @@ class SortieController extends Controller
      */
     public function cancelSortie(Request $request, EntityManagerInterface $em, Sortie $sortie)
     {
-
         $etatRepository = $em->getRepository('App:Etat');
         $etat = $etatRepository->find(3);
         $cancelForm = $this->createForm(CancelType::class, $sortie);
         $cancelForm->handleRequest($request);
 
-        if ($sortie->getOrganisateur() == $this->getUser()) {
-
-
-
-            if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
-    $sortie->setInfoSortie('Motif de l\'annulation : '.$sortie->getInfoSortie());
+        if ($sortie->getOrganisateur() == $this->getUser())
+        {
+            if ($cancelForm->isSubmitted() && $cancelForm->isValid())
+            {
+                $sortie->setInfoSortie('Motif de l\'annulation : '.$sortie->getInfoSortie());
                 $sortie->setEtat($etat);
                 $em->persist($sortie);
                 $em->flush();
 
                 $this->addFlash("notice", "Votre sortie a été annulée");
                 return $this->redirectToRoute('sortie');
-
             }
-
-
-            return $this->render("sortie/cancelSortie.html.twig", ["cancelForm" => $cancelForm->createView()]
-            );
+            return $this->render("sortie/cancelSortie.html.twig", ["cancelForm" => $cancelForm->createView()]);
         }
         return $this->redirectToRoute('sortie');
     }
@@ -172,31 +152,24 @@ class SortieController extends Controller
      */
     public function requeteAjax(Request $request, EntityManagerInterface $em)
     {
-
         $select= $request->request->get('choix');
-        $lieux= $em->getRepository(Lieu::class)->findBy([
-            'Ville'=>$select
-        ]);
+        $lieux= $em->getRepository(Lieu::class)->findBy(['Ville'=>$select]);
         $lieuTab=[];
-        foreach ($lieux as $lieu){
-            $lieuTab[$lieu->getId()]= [
+        foreach ($lieux as $lieu)
+        {
+            $lieuTab[$lieu->getId()]=
+                [
                 'nom' => $lieu->getNom(),
                 'rue'=> $lieu->getRue(),
                 'lat'=>$lieu->getLatitude(),
                 'long'=>$lieu->getLongitude()
-
-                ]
-;
+                ];
         }
-       $response= new Response(json_encode($lieuTab));
-
+        $response= new Response(json_encode($lieuTab));
         $response->headers->set('Content-Type','application/json');
 
         return $response;
-
-
     }
-
 
 
     /**
@@ -205,17 +178,6 @@ class SortieController extends Controller
      */
     public function showSortie (Request $request, Sortie $sortie)
     {
-
-
-
-
         return $this->render ("sortie/uneSortie.html.twig", ["sortie"=>$sortie]);
-
-
-
-
-
-
-
     }
 }

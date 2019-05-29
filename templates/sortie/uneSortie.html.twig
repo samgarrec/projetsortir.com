@@ -3,7 +3,7 @@
 {% block title %}Détails | {{ parent () }} {% endblock %}
 
 {% block main %}
-
+ <div class="container">
 
     <h1 align="center">Détails de {{ sortie.nom }}</h1>
     {% set present=false %}
@@ -72,6 +72,7 @@
         <table class="table table-striped table-dark text-center col-5 offset-1">
             <thead>
             <tr>
+                <th scope="col">Photo</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Prénom</th>
                 <th scope="col">Site</th>
@@ -82,7 +83,7 @@
             {#        {% if sortie.etat.libelle !='cree' or sortie.etat.libelle!='annule' or sortie.organisateur.id==app.user.id %}#}
             {% for participant in sortie.participants %}
                 <tr>
-
+                    <td>{{ participant.picture }}</td>
                     <td><a href="{{ path ('un-profil',{'id': participant.id}) }}">{{ participant.nom }} </a></td>
                     <td>{{ participant.prenom }}</td>
 
@@ -102,9 +103,7 @@
     </div>
 
 
-
-
-
+</div>
 {% endblock %}
 
 {% block javascripts %}  {{ parent() }} ||

@@ -29,41 +29,24 @@ class SearchFormType extends AbstractType
                     return $er->createQueryBuilder('s')
                         ->orderBy('s.nom','ASC');
 
-                },'choice_label'=>'nom',
+                },'choice_label'=>'nom'])
 
 
-            ])
-
-
-            ->add('nomDeLaSortie',\Symfony\Component\Form\Extension\Core\Type\TextType::class, [ 'required'=>false
-            ])
+            ->add('nomDeLaSortie',\Symfony\Component\Form\Extension\Core\Type\TextType::class,['required'=>false, 'label'=>'Nom de la sortie'])
             ->add('dateDepart',DateType::class, [
-                'widget' => 'choice', 'data' => new \DateTime("now")
-            ])
+                'widget' => 'choice', 'data' => new \DateTime("now"), 'label'=>'Date de début'])
             ->add('dateFin',DateType::class, [
-                'widget' => 'choice', 'data' => new \DateTime("now")
-            ])
+                'widget' => 'choice', 'data' => new \DateTime("now"), 'label'=>'Date de fin'])
 
-            ->add('isOrganisateur', CheckboxType::class, [
-                'label'    => 'Mes événements',
-                'required' => false,
-            ])
+            ->add('isOrganisateur', CheckboxType::class, ['label'=> 'Mes événements','required' => false])
             ->add('isRegistred', CheckboxType::class, [
                 'label'    => 'Sorties auxquelles je suis inscrit(e)',
-                'required' => false,
-            ])
+                'required' => false])
          //   ->add('isNotRegistred', CheckboxType::class, [
            //     'label'    => 'Sorties auxquelles je ne suis pas inscrit(e)',
            //     'required' => false,
           //  ])
-            ->add('pastSorties', CheckboxType::class, [
-                'label'    => 'Sorties anciennes',
-                'required' => false,
-            ])
-        ->add('rechercher',SubmitType::class);
-
-
-
+            ->add('pastSorties', CheckboxType::class, ['label' => 'Sorties anciennes','required' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

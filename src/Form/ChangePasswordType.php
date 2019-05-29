@@ -30,10 +30,7 @@ class ChangePasswordType extends AbstractType
                 'required' => true,
             ))
             ->add('submit', SubmitType::class, array(
-                'attr' => array(
-                    'class' => 'btn btn-primary btn-block'
-                )
-            ));
+                'attr' => array('class' => 'btn btn-outline-light')));
     }
     public function configureOptions(OptionsResolver $resolver)
     {
