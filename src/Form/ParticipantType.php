@@ -25,10 +25,7 @@ class ParticipantType extends AbstractType
             ->add('Site', EntityType::class,['class'=>Site::class,'query_builder'
             => function(EntityRepository $er){
                 return $er->createQueryBuilder('s')
-                    ->orderBy('s.nom','ASC');
-
-                },'choice_label'=>'nom'])
-            ->add('picture', FileType::class, array('label' => 'Picture (png, jpeg)', 'data_class'=> null, 'required' => false));
+                    ->orderBy('s.nom','ASC');},'choice_label'=>'nom']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
