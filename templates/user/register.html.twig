@@ -4,6 +4,7 @@
 
 {% block main %}
     <div class="container">
+        <div class="fondp">
     <h1>Ajouter un participant</h1>
 
     <div>
@@ -12,6 +13,7 @@
         <button type="submit">Enregister</button>
         {{ form_end(registerForm) }}
     </div>
+        </div>
     </div>
-
+    <a href="{{ path('import') }}">Importer fichier csv</a>
 {% endblock %}

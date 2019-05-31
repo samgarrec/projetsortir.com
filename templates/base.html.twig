@@ -50,9 +50,9 @@
                             </li>
                         {% endif %}
 
-
+                    <li  class="nav-item active">
                     {% if app.user and app.user.administrateur %}
-                        <li>
+
                             <a class="nav-link" href="{{ path ('participant-register') }}">Créer un utilisateur</a>
                         </li>
                     {% endif %}

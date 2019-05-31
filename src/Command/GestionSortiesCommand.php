@@ -57,6 +57,11 @@ class GestionSortiesCommand extends Command
                     $this->em->flush($sortie);
 
             }
+            if ($sortie->getDateheureDebut() == new \DateTime('now')) {
+                $etat = $etatRepository->find(4);
+                $sortie->setEtat($etat);
+                $this->em->flush($sortie);
+            }
 
 
             if ($input->getOption('option1')) {
